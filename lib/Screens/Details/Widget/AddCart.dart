@@ -32,7 +32,7 @@ class AddToCart extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              height: 60,
+              height: 50,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -47,7 +47,7 @@ class AddToCart extends StatelessWidget {
                       Text(
                         "Add to cart",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 17.0,
                         ),
                       ),
                       SizedBox(width: 10.0,),

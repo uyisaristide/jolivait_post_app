@@ -27,8 +27,9 @@ class _ShoppingAppState extends State<ShoppingApp> {
       title: 'Shopping App',
       theme: ThemeData(
         backgroundColor: const Color(0xFFFFAFAFA),
-        primaryColor:const Color(0xFFFFBD00),
-        accentColor: const Color(0xFFFFEBC7),
+        // primaryColor:const Color(0xFFFFBD00),
+        primaryColor: Colors.teal,
+        accentColor: Colors.teal,
       ),
       home: NavigationScreens(),
     );

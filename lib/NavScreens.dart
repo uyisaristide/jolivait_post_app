@@ -10,35 +10,33 @@ class NavigationScreens extends StatefulWidget {
 
 class _NavigationScreensState extends State<NavigationScreens> {
   int currentIndex = 0;
-  final bottomList = ["home", "menu", "heart", "user"];
+  final bottomList = ["home", "menu", "user"];
   final screens = [
     const HomePage(),
     const MenuScreen(),
     const ProfileScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme
-          .of(context)
-          .primaryColor,
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        showUnselectedLabels: false,
-        showSelectedLabels: false,
-        type:BottomNavigationBarType.fixed,
-        items: bottomList
-            .map((e) =>
-            BottomNavigationBarItem(
-                icon: Image.asset("assets/icons/$e.png", width: 25,), label: e))
-            .toList(),
-      ),
+          currentIndex: currentIndex,
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          selectedItemColor: Theme.of(context).primaryColor,
+          showUnselectedLabels: false,
+          showSelectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Menu"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          ]),
     );
   }
 }

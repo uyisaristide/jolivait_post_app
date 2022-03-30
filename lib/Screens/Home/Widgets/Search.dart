@@ -47,13 +47,13 @@ class SearchBar extends StatelessWidget {
         Row(
           children: suggestionsList
               .map((e) => Container(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0),
                     margin: const EdgeInsets.only(top: 10.0, right: 10.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: Theme.of(context).accentColor,
                     ),
-                    child: Text(e,style: const TextStyle(color: Colors.grey),),
+                    child: Text(e,style: const TextStyle(color: Colors.white),),
                   ))
               .toList(),
         ),
