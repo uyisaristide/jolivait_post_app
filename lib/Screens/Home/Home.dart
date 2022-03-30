@@ -3,7 +3,7 @@ import 'package:shopping/Screens/Home/Widgets/BestSell.dart';
 import 'package:shopping/Screens/Home/Widgets/Custom_App_Bar.dart';
 import 'package:shopping/Screens/Home/Widgets/NewArrivals.dart';
 import 'package:shopping/Screens/Home/Widgets/Search.dart';
-
+import 'package:http/http.dart' as http;
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 

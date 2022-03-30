@@ -1,11 +1,40 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:shopping/Screens/Home/Widgets/ItemsWidget.dart';
-
-import '../../../Models/Products.dart';
 import 'CategoryList.dart';
+import 'package:http/http.dart' as http;
 
-class NewArrivals extends StatelessWidget {
-  final productsList = Products.generateItems();
+import 'ItemsWidget.dart';
+
+class NewArrivals extends StatefulWidget {
+  @override
+  State<NewArrivals> createState() => _NewArrivalsState();
+}
+
+class _NewArrivalsState extends State<NewArrivals> {
+  dynamic productsList = [];
+
+  final getUrl = 'http://product-mgt-api.herokuapp.com/api/product';
+
+  Future fetchAlbum() async{
+
+    try{
+      final response = await http.get(Uri.parse(getUrl));
+      if(response.statusCode == 200){
+        final responseProducts = jsonDecode(response.body) as List;
+        setState(() {
+          productsList = responseProducts;
+        });
+      }else if(response.statusCode == 401){
+        print("Unauthenticated");
+        return "You\'re not authenticated to see this";
+      }else{
+        throw "Failed to fetch data";
+      }
+    }catch(error){
+      throw error;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
