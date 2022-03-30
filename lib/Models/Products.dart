@@ -16,7 +16,7 @@ class Products {
       required this.details,
       required this.thumbnail});
 
-  factory Products.fromJson(Map<String, dynamic> fromJson) => Products(
+  factory Products.fromJson(Map<dynamic, dynamic> fromJson) => Products(
       id: fromJson['id'],
       descriptions: fromJson['description'],
       names: fromJson['name'],

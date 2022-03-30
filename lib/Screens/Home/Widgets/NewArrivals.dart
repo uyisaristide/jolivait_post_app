@@ -16,16 +16,18 @@ class _NewArrivalsState extends State<NewArrivals> {
 
   final getUrl = 'http://product-mgt-api.herokuapp.com/api/product';
 
-  Future fetchAlbum() async{
+  Future fetchProduct() async{
 
     try{
       final response = await http.get(Uri.parse(getUrl));
       if(response.statusCode == 200){
+        // print(response.body);
         final responseProducts = jsonDecode(response.body) as List;
         setState(() {
           productsList = responseProducts;
         });
       }else if(response.statusCode == 401){
+        print(response.body);
         print("Unauthenticated");
         return "You\'re not authenticated to see this";
       }else{
@@ -34,6 +36,12 @@ class _NewArrivalsState extends State<NewArrivals> {
     }catch(error){
       throw error;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProduct();
   }
 
   @override
