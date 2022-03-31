@@ -121,6 +121,23 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               ),
             ),
           ),
+          new Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: AppBar(
+                title: Text(''),
+                leading: new IconButton(
+                  icon: new Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                backgroundColor:
+                    Colors.transparent, //You can make this transparent
+                elevation: 0.0,
+              ))
         ],
       ),
     );
