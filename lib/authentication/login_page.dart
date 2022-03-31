@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping/Models/login_model.dart';
 import './common/theme_helper.dart';
 
 import 'forgot_password_page.dart';
 import 'profile_page.dart';
 import 'registration_page.dart';
 import 'widgets/header_widget.dart';
+
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,16 +21,23 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
+  final _emailContoller = TextEditingController();
+  final _passwordContoller = TextEditingController();
+
+  // late LoginRequestModel requestModel;
+
+  // void initState() {
+  //   super.initState();
+  //   requestModel =  LoginRequestModel(email: _emailContoller.text, password: _passwordContoller.text);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: 
-      SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: 
-          Column(
+          child: Column(
             children: [
               Container(
                 height: _headerHeight,
@@ -57,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 Container(
                                   child: TextField(
+                                    controller: _emailContoller,
                                     decoration: ThemeHelper()
                                         .textInputDecoration('User Name',
                                             'Enter your user name'),
@@ -66,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 SizedBox(height: 30.0),
                                 Container(
-                                  child: TextField(
+                                  child: TextFormField(
+                                    controller: _passwordContoller,
                                     obscureText: true,
                                     decoration: ThemeHelper()
                                         .textInputDecoration(
@@ -113,12 +125,13 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                     onPressed: () {
+                                      login();
+
+                                      // if (validateAndSave()) {
+                                      //   print(requestModel.toJson());
+                                      // }
+
                                       //After successful login we will redirect to profile page. Let's create profile page now
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProfilePage()));
                                     },
                                   ),
                                 ),
@@ -146,13 +159,42 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             )),
                       ],
-                    )
-                    ),
+                    )),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> login() async {
+    String url = "https://product-mgt-api.herokuapp.com/api/login";
+
+    if (_emailContoller.text.isNotEmpty && _passwordContoller.text.isNotEmpty) {
+      final response = await http.post(Uri.parse(url), body: {
+        'email': _emailContoller.text,
+        'password': _passwordContoller.text,
+      });
+      print(response.statusCode);
+
+      if (response.statusCode == 201) {
+        print(response.statusCode);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('ivalid crentials'),
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('required'),
+        ),
+      );
+    }
   }
 }

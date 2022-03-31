@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shopping/Screens/Menu/Widgets/ItemCard.dart';
 
 import '../../../Models/Products.dart';
+
 class MenuItems extends StatefulWidget {
   @override
   State<MenuItems> createState() => _MenuItemsState();
 }
+
 class _MenuItemsState extends State<MenuItems> {
   final productsList = Products.generateItems();
   @override
@@ -16,14 +18,20 @@ class _MenuItemsState extends State<MenuItems> {
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 20, bottom: 15),
-            child: Center(child: Text("All products", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),),
+            child: Center(
+              child: Text(
+                "All products",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ),
           ),
           ListView.separated(
-              itemBuilder: (context, index)=>ItemMenu(productsList[index]),
+              itemBuilder: (context, index) => ItemMenu(productsList[index]),
               shrinkWrap: true,
-              separatorBuilder: (_, index)=>const SizedBox(height: 4,),
-              itemCount: productsList.length
-          )
+              separatorBuilder: (_, index) => const SizedBox(
+                    height: 4,
+                  ),
+              itemCount: productsList.length)
           // Card(
           //   margin: const EdgeInsets.symmetric(horizontal: 25),
           //   shape:

@@ -17,7 +17,7 @@ class _SizedListState extends State<SizedList> {
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => GestureDetector(
-                onTap: (){
+                onTap: () {
                   // print("Seleted $index");
                   setState(() {
                     currentSelected = index;
@@ -44,8 +44,6 @@ class _SizedListState extends State<SizedList> {
                     ),
                   ),
                 ),
-
-
               ),
           separatorBuilder: (_, index) => const SizedBox(
                 width: 10,

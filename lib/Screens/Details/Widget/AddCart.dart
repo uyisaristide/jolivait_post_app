@@ -50,7 +50,9 @@ class AddToCart extends StatelessWidget {
                           fontSize: 17.0,
                         ),
                       ),
-                      SizedBox(width: 10.0,),
+                      SizedBox(
+                        width: 10.0,
+                      ),
                       Icon(Icons.shopping_cart_outlined)
                     ],
                   )),

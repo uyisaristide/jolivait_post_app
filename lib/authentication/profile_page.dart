@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -238,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Theme.of(context).accentColor),
                 ),
                 onTap: () {
-                  SystemNavigator.pop();
+                  // logout();
                 },
               ),
             ],
@@ -282,14 +284,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 20,
                   ),
                   Text(
-                    'Mr. Donald Trump',
+                    'MR Matwi Atumva',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Text(
-                    'Former President',
+                    'Bubu Boy',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
@@ -329,13 +331,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                               horizontal: 12, vertical: 4),
                                           leading: Icon(Icons.my_location),
                                           title: Text("Location"),
-                                          subtitle: Text("USA"),
+                                          subtitle: Text("Rwanda"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.email),
                                           title: Text("Email"),
-                                          subtitle:
-                                              Text("donaldtrump@gmail.com"),
+                                          subtitle: Text("Matwi@gmail.com"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.phone),
@@ -367,4 +368,12 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+  // Future <Void> logout(){
+
+  //   return Navigator.push(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                       builder: (context) => ForgotPasswordVerificationPage()),
+  //                 );
+  // }
 }

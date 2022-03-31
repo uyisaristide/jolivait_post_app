@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 

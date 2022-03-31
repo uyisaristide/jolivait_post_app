@@ -43,24 +43,24 @@ class ProductInfo extends StatelessWidget {
                 ),
                 const Text(
                   "3.4 (2.5k)",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey),
                 )
               ],
             ),
           ),
           RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
+            text: TextSpan(children: [
+              TextSpan(
                   text: "Much more descriptions",
-                  style: TextStyle(color: Colors.grey.withOpacity(0.7), height: 1.5)
-                ),
-                TextSpan(
-                  text: " Read More", style: TextStyle(color: Theme.of(context).primaryColor, fontStyle: FontStyle.italic)
-                )
-              ]
-            ),
+                  style: TextStyle(
+                      color: Colors.grey.withOpacity(0.7), height: 1.5)),
+              TextSpan(
+                  text: " Read More",
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontStyle: FontStyle.italic))
+            ]),
           )
         ],
       ),

@@ -76,8 +76,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                      width: 5, color: Colors.white),
+                                  border:
+                                      Border.all(width: 5, color: Colors.white),
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
@@ -124,8 +124,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             decoration: ThemeHelper().textInputDecoration(
                                 'Name', 'Enter your  name'),
                           ),
-                          decoration:
-                              ThemeHelper().inputBoxDecorationShaddow(),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         SizedBox(height: 20.0),
                         Container(
@@ -143,8 +142,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               return null;
                             },
                           ),
-                          decoration:
-                              ThemeHelper().inputBoxDecorationShaddow(),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         // SizedBox(height: 20.0),
                         // Container(
@@ -177,8 +175,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               return null;
                             },
                           ),
-                          decoration:
-                              ThemeHelper().inputBoxDecorationShaddow(),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         SizedBox(height: 20.0),
                         Container(
@@ -194,8 +191,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               return null;
                             },
                           ),
-                          decoration:
-                              ThemeHelper().inputBoxDecorationShaddow(),
+                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
                         SizedBox(height: 15.0),
                         FormField<bool>(
@@ -205,9 +201,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 Row(
                                   children: <Widget>[
                                     Checkbox(
-                                        
                                         checkColor: Colors.teal,
-                                        
                                         value: checkboxValue,
                                         onChanged: (value) {
                                           setState(() {
@@ -264,13 +258,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                final String name = nameController.text;
-                                final String email = emailController.text;
-                                final String password =
-                                    passwordController.text;
-                                final String cpassword =
-                                    cpasswordController.text;
-
+                                register();
                                 // final User? user = await createUser(
                                 //     name, email, password, cpassword);
 
@@ -278,7 +266,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 //   _user = user;
                                 // });
 
-                                
                               }
                             },
                           ),
@@ -379,5 +366,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
     );
+  }
+
+  Future<void> register() async {
+    String url = "https://product-mgt-api.herokuapp.com/api/register";
+    
+      final response = await http.post(Uri.parse(url), body: {
+        'name': nameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+        'password_confirmation': cpasswordController.text
+      });
+      print(response.statusCode);
+
+      if (response.statusCode == 201) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      } else if (response.statusCode == 422) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('this email is already taken'),
+          ),
+        );
+      } else if (response.statusCode == 500) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('not reaching to the server'),
+          ),
+        );
+      }
+      print(response.statusCode);
+    
   }
 }
