@@ -16,30 +16,12 @@ class RegistrationPage extends StatefulWidget {
   }
 }
 
-// Future<User?> createUser(
-//     String name, String email, String password, String confirmPassword) async {
-//   final String apiUrl =
-//       "http://product-mgt-api.herokuapp.com/api/docs/api/register";
-
-//   final response = await http.post(Uri.parse(apiUrl), body: {
-//     "name": name,
-//     "email": email,
-//     "password": password,
-//     "password_confirmation": confirmPassword
-//   });
-//   if (response.statusCode == 201) {
-//     final String responseString = response.body;
-
-//     return userFromJson(responseString);
-//   } else {
-//     return null;
-//   }
-// }
-
 class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;
+
+  bool hidePassword = true;
 
   // User? _user;
 
@@ -167,7 +149,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             controller: passwordController,
                             obscureText: true,
                             decoration: ThemeHelper().textInputDecoration(
-                                "Password", "Enter your password"),
+                                "Password",
+                                "Enter your password",
+                                IconButton(
+                                    icon: Icon(Icons.visibility),
+                                    onPressed: () {
+                                      setState(() {
+                                        hidePassword = !hidePassword;
+                                      });
+                                    })),
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please enter your password";
@@ -181,9 +171,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         Container(
                           child: TextFormField(
                             controller: cpasswordController,
-                            obscureText: true,
+                            obscureText: hidePassword,
                             decoration: ThemeHelper().textInputDecoration(
-                                "Confirm", "Confirm your password"),
+                                "Confirm",
+                                "Confirm your password",
+                                IconButton(
+                                    icon: Icon(Icons.visibility),
+                                    onPressed: () {
+                                      setState(() {
+                                        hidePassword = !hidePassword;
+                                      });
+                                    })),
                             validator: (val) {
                               if (val!.isEmpty) {
                                 return "Please confirm your password";
@@ -370,32 +368,31 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   Future<void> register() async {
     String url = "https://product-mgt-api.herokuapp.com/api/register";
-    
-      final response = await http.post(Uri.parse(url), body: {
-        'name': nameController.text,
-        'email': emailController.text,
-        'password': passwordController.text,
-        'password_confirmation': cpasswordController.text
-      });
-      print(response.statusCode);
 
-      if (response.statusCode == 201) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfilePage()));
-      } else if (response.statusCode == 422) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('this email is already taken'),
-          ),
-        );
-      } else if (response.statusCode == 500) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('not reaching to the server'),
-          ),
-        );
-      }
-      print(response.statusCode);
-    
+    final response = await http.post(Uri.parse(url), body: {
+      'name': nameController.text,
+      'email': emailController.text,
+      'password': passwordController.text,
+      'password_confirmation': cpasswordController.text
+    });
+    print(response.statusCode);
+
+    if (response.statusCode == 201) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ProfilePage()));
+    } else if (response.statusCode == 422) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('this email is already taken'),
+        ),
+      );
+    } else if (response.statusCode == 500) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('not reaching to the server'),
+        ),
+      );
+    }
+    print(response.statusCode);
   }
 }

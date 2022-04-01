@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './login_page.dart';
 import './splash_screen.dart';
 import './widgets/header_widget.dart';
@@ -21,6 +24,32 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   double _drawerIconSize = 24;
   double _drawerFontSize = 17;
+
+  String? token;
+  @override
+  void initState() {
+    isLogged().whenComplete(() async {
+      Timer(
+        Duration(seconds: 1),
+        () => Get.to(
+          token == null ? LoginPage() : ProfilePage(),
+        ),
+      );
+    });
+    super.initState();
+  }
+
+  @override
+  Future isLogged() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainToken = sharedPreferences.getString('token');
+
+    setState(() {
+      token = obtainToken;
+    });
+    print(token);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +269,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Theme.of(context).accentColor),
                 ),
                 onTap: () {
-                  // logout();
+                  logout();
+                  
                 },
               ),
             ],
@@ -368,12 +398,14 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  // Future <Void> logout(){
 
-  //   return Navigator.push(
-  //                   context,
-  //                   MaterialPageRoute(
-  //                       builder: (context) => ForgotPasswordVerificationPage()),
-  //                 );
-  // }
+  Future<void> logout() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    sharedPreferences.remove('token');
+
+    Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+  }
 }

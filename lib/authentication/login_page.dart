@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping/Models/login_model.dart';
 import './common/theme_helper.dart';
 
@@ -23,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   Key _formKey = GlobalKey<FormState>();
   final _emailContoller = TextEditingController();
   final _passwordContoller = TextEditingController();
+
+  bool hidePassword = true;
 
   // late LoginRequestModel requestModel;
 
@@ -80,9 +85,18 @@ class _LoginPageState extends State<LoginPage> {
                                   child: TextFormField(
                                     controller: _passwordContoller,
                                     obscureText: true,
-                                    decoration: ThemeHelper()
-                                        .textInputDecoration(
-                                            'Password', 'Enter your password'),
+                                    decoration:
+                                        ThemeHelper().textInputDecoration(
+                                            'Password',
+                                            'Enter your password',
+                                            IconButton(
+                                                icon: Icon(Icons.visibility),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    hidePassword =
+                                                        !hidePassword;
+                                                  });
+                                                })),
                                   ),
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
@@ -124,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                                             color: Colors.white),
                                       ),
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       login();
 
                                       // if (validateAndSave()) {
@@ -180,6 +194,10 @@ class _LoginPageState extends State<LoginPage> {
 
       if (response.statusCode == 201) {
         print(response.statusCode);
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('token', _emailContoller.text);
+
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ProfilePage()));
       } else {
