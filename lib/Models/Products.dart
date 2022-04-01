@@ -12,10 +12,10 @@ class Products {
       required this.names,
       required this.price,
       required this.quantity,
-        required this.descriptions,
+      required this.descriptions,
       required this.details,
       required this.thumbnail});
-
+  
   factory Products.fromJson(Map<String, dynamic> fromJson){
     // print("In constructor factory constructor ${fromJson["names"]}");
     return Products(
@@ -43,7 +43,6 @@ class Products {
 
   static List<Products> generateItems() {
     return [
-
       Products(
           id: 1000,
           names: 'Gucci Shirt',
@@ -51,9 +50,7 @@ class Products {
           descriptions: "hardcoded strings",
           quantity: 240,
           details: ["assets/images/arrival1.png", "assets/images/best1.png"],
-          thumbnail: "assets/images/arrival1.png"
-      ),
-
+          thumbnail: "assets/images/arrival1.png"),
       Products(
           id: 1100,
           names: 'T chirt, Polo',
@@ -61,9 +58,7 @@ class Products {
           descriptions: "Hardcoded strings",
           quantity: 53,
           details: ["assets/images/arrival2.png", "assets/images/detail2.png"],
-          thumbnail: "assets/images/arrival2.png"
-      ),
-
+          thumbnail: "assets/images/arrival2.png"),
     ];
   }
 }

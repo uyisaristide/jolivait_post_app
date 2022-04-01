@@ -107,7 +107,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.of(context).pop();
                   },
                   child: Container(
@@ -126,7 +126,8 @@ class _DetailAppBarState extends State<DetailAppBar> {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.9),
                       shape: BoxShape.circle),
-                  child: const Icon(Icons.more_horiz, color: Colors.grey, size: 15),
+                  child: const Icon(Icons.more_horiz,
+                      color: Colors.grey, size: 15),
                 )
               ],
             ),

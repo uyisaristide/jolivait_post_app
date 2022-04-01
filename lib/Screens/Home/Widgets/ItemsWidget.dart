@@ -13,8 +13,8 @@ class Items extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => DetailScreen(products))),
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => DetailScreen(products))),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -48,8 +48,7 @@ class Items extends StatelessWidget {
                           color: Colors.red,
                           size: 15,
                         ),
-                      )
-                  ),
+                      )),
                 ],
               ),
               Text(

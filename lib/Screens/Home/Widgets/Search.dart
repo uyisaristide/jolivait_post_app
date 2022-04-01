@@ -53,7 +53,10 @@ class SearchBar extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                       color: Theme.of(context).accentColor,
                     ),
-                    child: Text(e,style: const TextStyle(color: Colors.white),),
+                    child: Text(
+                      e,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ))
               .toList(),
         ),
