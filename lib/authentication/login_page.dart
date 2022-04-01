@@ -22,7 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  double _headerHeight = 250;
+  double _headerHeight = 130;
   Key _formKey = GlobalKey<FormState>();
   final _emailContoller = TextEditingController();
   final _passwordContoller = TextEditingController();
@@ -56,12 +56,12 @@ class _LoginPageState extends State<LoginPage> {
                         20, 10, 20, 10), // This will be the login form
                     child: Column(
                       children: [
-                        const Text(
-                          'Hello',
-                          style: TextStyle(
-                              fontSize: 60, fontWeight: FontWeight.bold),
-                        ),
-                        const Text(
+                        // Text(
+                        //   'Hello',
+                        //   style: TextStyle(
+                        //       fontSize: 60, fontWeight: FontWeight.bold),
+                        // ),
+                        Text(
                           'Signin into your account',
                           style: TextStyle(color: Colors.grey),
                         ),

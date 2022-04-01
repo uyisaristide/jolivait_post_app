@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping/Screens/Cart/MyCart.dart';
 import '../../Models/Products.dart';
-class Cart extends StatefulWidget {
 
+class Cart extends StatefulWidget {
   @override
   State<Cart> createState() => _CartState();
 }

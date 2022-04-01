@@ -12,8 +12,8 @@ class ItemMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => DetailScreen(products))),
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => DetailScreen(products))),
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           shape:

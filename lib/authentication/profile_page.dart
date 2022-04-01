@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping/main.dart';
 import './login_page.dart';
 import './splash_screen.dart';
 import './widgets/header_widget.dart';
@@ -22,41 +23,41 @@ class _ProfilePageState extends State<ProfilePage> {
   double _drawerIconSize = 24;
   double _drawerFontSize = 17;
 
-  String? token;
+  // String? token;
   @override
-  void initState() {
-    isLogged().whenComplete(() async {
-      Timer(
-        Duration(seconds: 1),
-        () => Get.to(
-          token == null ? LoginPage() : ProfilePage(),
-        ),
-      );
-    });
-    super.initState();
-  }
+  // void initState() {
+  //   isLogged().whenComplete(() async {
+  //     Timer(
+  //       Duration(seconds: 1),
+  //       () => Get.to(
+  //         token == null ? LoginPage() : ProfilePage(),
+  //       ),
+  //     );
+  //   });
+  //   super.initState();
+  // }
 
-  @override
-  Future isLogged() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var obtainToken = sharedPreferences.getString('token');
+  // @override
+  // Future isLogged() async {
+  //   final SharedPreferences sharedPreferences =
+  //       await SharedPreferences.getInstance();
+  //   var obtainToken = sharedPreferences.getString('token');
 
-    setState(() {
-      token = obtainToken;
-    });
-    print(token);
-  }
+  //   setState(() {
+  //     token = obtainToken;
+  //   });
+  //   print(token);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile Page",
+        title: Text(
+          "USERS PROFILE PAGE",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        elevation: 0.5,
+        elevation: null,
         iconTheme: IconThemeData(color: Colors.white),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -90,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       minHeight: 12,
                     ),
                     child: Text(
-                      '5',
+                      '1',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 8,
@@ -267,7 +268,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 onTap: () {
                   logout();
-                  
                 },
               ),
             ],
@@ -402,7 +402,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
     sharedPreferences.remove('token');
 
-    Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.pushNamed(context, '/');
   }
 }

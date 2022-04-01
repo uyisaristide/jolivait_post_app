@@ -15,8 +15,8 @@ class Products {
       required this.descriptions,
       required this.details,
       required this.thumbnail});
-  
-  factory Products.fromJson(Map<String, dynamic> fromJson){
+
+  factory Products.fromJson(Map<String, dynamic> fromJson) {
     // print("In constructor factory constructor ${fromJson["names"]}");
     return Products(
         id: fromJson['id'],
@@ -25,8 +25,7 @@ class Products {
         price: fromJson['price'],
         quantity: fromJson['quantity'],
         details: ["assets/images/arrival1.png", "assets/images/best1.png"],
-        thumbnail: "assets/images/arrival1.png"
-    );
+        thumbnail: "assets/images/arrival1.png");
   }
 
   // Map<String, dynamic> toMap() {
