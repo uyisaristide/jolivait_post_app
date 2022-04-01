@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping/Screens/Cart/MyCart.dart';
 import '../../Models/Products.dart';
-class Cart extends StatefulWidget {
 
+class Cart extends StatefulWidget {
   @override
   State<Cart> createState() => _CartState();
 }
@@ -29,20 +29,18 @@ class _CartState extends State<Cart> {
             child: SizedBox(
               child: ListView.separated(
                   scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) =>
-                      MyCart(productsList[index]),
+                  itemBuilder: (context, index) => MyCart(productsList[index]),
                   separatorBuilder: (_, index) => SizedBox(
-                    height: 5,
-                  ),
+                        height: 5,
+                      ),
                   itemCount: productsList.length),
             ),
           ),
           Center(
             child: OutlinedButton.icon(
-                onPressed: (){},
+                onPressed: () {},
                 icon: const Icon(Icons.payment),
-                label: const Text('Proceed to pay')
-            ),
+                label: const Text('Proceed to pay')),
           ),
           // Card(
           //   margin: const EdgeInsets.symmetric(horizontal: 25),

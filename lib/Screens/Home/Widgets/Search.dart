@@ -40,7 +40,8 @@ class SearchBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0)),
             child: Image.asset(
               "assets/icons/filter.png",
-              width: 20,height: 20,
+              width: 20,
+              height: 20,
             ),
           )
         ]),

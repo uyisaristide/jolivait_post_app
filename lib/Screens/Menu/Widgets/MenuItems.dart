@@ -55,14 +55,19 @@ class _MenuItemsState extends State<MenuItems> {
             ),
           ),
           productsList.isEmpty
-              ? Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,))
+              ? Center(
+                  child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ))
               : Container(
                   height: 500,
                   child: SizedBox(
                     child: ListView.separated(
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => productsList.isEmpty
-                            ? const Center(child: Text("There is no products"),)
+                            ? const Center(
+                                child: Text("There is no products"),
+                              )
                             : ItemMenu(productsList[index]),
                         separatorBuilder: (_, index) => const SizedBox(
                               height: 5,

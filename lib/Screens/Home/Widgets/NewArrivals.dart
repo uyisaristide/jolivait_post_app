@@ -78,7 +78,9 @@ class _NewArrivalsState extends State<NewArrivals> {
         ),
         productsList.isEmpty
             ? Center(
-                child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
+                ),
               )
             : Container(
                 child: SizedBox(
@@ -90,7 +92,9 @@ class _NewArrivalsState extends State<NewArrivals> {
                     separatorBuilder: (_, index) => const SizedBox(
                           width: 5,
                         ),
-                    itemCount: ((productsList.length)~/5)>0?(productsList.length)~/5:productsList.length),
+                    itemCount: ((productsList.length) ~/ 5) > 0
+                        ? (productsList.length) ~/ 5
+                        : productsList.length),
               )),
       ],
     ));

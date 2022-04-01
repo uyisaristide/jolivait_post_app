@@ -39,7 +39,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: [
             Container(
               height: 200,
-              child: HeaderWidget(200, false, Icons.person_add_alt_1_rounded),
+              child: HeaderWidget(100, false, Icons.person_add_alt_1_rounded),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(25, 50, 25, 10),

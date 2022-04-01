@@ -22,6 +22,7 @@ class _ShoppingAppState extends State<ShoppingApp> {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
+      initialRoute: '/',
       debugShowCheckedModeBanner: false,
       title: 'Shopping App',
       theme: ThemeData(

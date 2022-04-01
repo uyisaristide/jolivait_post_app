@@ -31,9 +31,7 @@ class Items extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                         image: DecorationImage(
                             image: AssetImage(products.thumbnail),
-                            fit: BoxFit.fitHeight
-                        )
-                    ),
+                            fit: BoxFit.fitHeight)),
                   ),
                   Positioned(
                       right: 20,

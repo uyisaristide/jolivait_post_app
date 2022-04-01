@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../Models/Products.dart';
 import '../Details/Details.dart';
+
 class MyCart extends StatelessWidget {
   final Products products;
   MyCart(this.products);
@@ -13,7 +14,7 @@ class MyCart extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Stack(
             children: [
               Padding(

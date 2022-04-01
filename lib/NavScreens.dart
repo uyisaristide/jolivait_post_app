@@ -18,7 +18,6 @@ class _NavigationScreensState extends State<NavigationScreens> {
     const MenuScreen(),
     Cart(),
     const ProfileScreen(),
-
   ];
 
   @override
