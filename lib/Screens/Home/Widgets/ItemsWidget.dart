@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:shopping/Models/Products.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
+import '../../../Models/Products.dart';
 import '../../Details/Details.dart';
 
 class Items extends StatelessWidget {
   final Products products;
-
   Items(this.products);
 
   @override
@@ -23,14 +24,16 @@ class Items extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
                     height: 170,
                     width: 200,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
                         image: DecorationImage(
                             image: AssetImage(products.thumbnail),
-                            fit: BoxFit.fitHeight)),
+                            fit: BoxFit.fitHeight
+                        )
+                    ),
                   ),
                   Positioned(
                       right: 20,

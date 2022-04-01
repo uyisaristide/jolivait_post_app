@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:shopping/Models/Products.dart';
-
-import '../../Details/Details.dart';
-
-class ItemMenu extends StatelessWidget {
+import '../../Models/Products.dart';
+import '../Details/Details.dart';
+class MyCart extends StatelessWidget {
   final Products products;
-
-  ItemMenu(this.products);
-
+  MyCart(this.products);
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => DetailScreen(products))),
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => DetailScreen(products))),
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Stack(
             children: [
               Padding(

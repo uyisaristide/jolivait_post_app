@@ -9,7 +9,7 @@ class BestSell extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategoryList(title: "Best of sell"),
+          CategoryList(title: "Most pupular"),
           Card(
             margin: EdgeInsets.symmetric(horizontal: 25),
             shape:

@@ -1,44 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:shopping/Screens/Menu/Widgets/ItemCard.dart';
-import 'package:http/http.dart' as http;
-import '../../../Models/Products.dart';
+import 'package:shopping/Screens/Cart/MyCart.dart';
+import '../../Models/Products.dart';
+class Cart extends StatefulWidget {
 
-class MenuItems extends StatefulWidget {
   @override
-  State<MenuItems> createState() => _MenuItemsState();
+  State<Cart> createState() => _CartState();
 }
 
-class _MenuItemsState extends State<MenuItems> {
-  // final productsList = Products.generateItems();
-  var productsList = <Products>[];
-
-  void fetchMenu() async {
-    final responses = await http
-        .get(Uri.parse('https://product-mgt-api.herokuapp.com/api/product'));
-    try {
-      if (responses.statusCode == 200) {
-        final mapping = (jsonDecode(responses.body) as Iterable)
-            .map((e) => Products.fromJson(e))
-            .toList();
-        setState(() {
-          productsList = mapping;
-        });
-      } else if (responses.statusCode == 401) {
-        const Text("Unauthenticated");
-      }
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchMenu();
-  }
-
+class _CartState extends State<Cart> {
+  var productsList = Products.generateItems();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,27 +19,31 @@ class _MenuItemsState extends State<MenuItems> {
             padding: EdgeInsets.only(top: 20, bottom: 15),
             child: Center(
               child: Text(
-                "All products",
+                "My cart",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
           ),
-          productsList.isEmpty
-              ? Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,))
-              : Container(
-                  height: 500,
-                  child: SizedBox(
-                    child: ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) => productsList.isEmpty
-                            ? const Center(child: Text("There is no products"),)
-                            : ItemMenu(productsList[index]),
-                        separatorBuilder: (_, index) => const SizedBox(
-                              height: 5,
-                            ),
-                        itemCount: productsList.length),
+          Container(
+            height: 430,
+            child: SizedBox(
+              child: ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) =>
+                      MyCart(productsList[index]),
+                  separatorBuilder: (_, index) => SizedBox(
+                    height: 5,
                   ),
-                ),
+                  itemCount: productsList.length),
+            ),
+          ),
+          Center(
+            child: OutlinedButton.icon(
+                onPressed: (){},
+                icon: const Icon(Icons.payment),
+                label: const Text('Proceed to pay')
+            ),
+          ),
           // Card(
           //   margin: const EdgeInsets.symmetric(horizontal: 25),
           //   shape:

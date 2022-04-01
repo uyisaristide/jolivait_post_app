@@ -22,7 +22,7 @@ class SearchBar extends StatelessWidget {
                   ),
                   hintText: "Make your search!",
                   hintStyle:
-                      const TextStyle(color: Colors.grey, fontSize: 18.0),
+                      const TextStyle(color: Colors.grey, fontSize: 15.0),
                   prefixIcon: Container(
                     padding: const EdgeInsets.all(15),
                     child: Image.asset(
@@ -40,7 +40,7 @@ class SearchBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.0)),
             child: Image.asset(
               "assets/icons/filter.png",
-              width: 25,
+              width: 20,height: 20,
             ),
           )
         ]),

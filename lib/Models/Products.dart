@@ -16,27 +16,30 @@ class Products {
       required this.details,
       required this.thumbnail});
 
-  factory Products.fromJson(Map<dynamic, dynamic> fromJson) => Products(
-      id: fromJson['id'],
-      descriptions: fromJson['description'],
-      names: fromJson['name'],
-      price: fromJson['price'],
-      quantity: fromJson['quantity'],
-      details: ["assets/images/arrival1.png", "assets/images/best1.png"],
-      thumbnail: "assets/images/arrival1.png"
-  );
-
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "names": names,
-      "price": price,
-      "descriptions":descriptions,
-      "quantity": quantity,
-      "details": details,
-      "thum": thumbnail,
-    };
+  factory Products.fromJson(Map<String, dynamic> fromJson){
+    // print("In constructor factory constructor ${fromJson["names"]}");
+    return Products(
+        id: fromJson['id'],
+        descriptions: fromJson['description'],
+        names: fromJson['name'],
+        price: fromJson['price'],
+        quantity: fromJson['quantity'],
+        details: ["assets/images/arrival1.png", "assets/images/best1.png"],
+        thumbnail: "assets/images/arrival1.png"
+    );
   }
+
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     "id": id,
+  //     "names": names,
+  //     "price": price,
+  //     "descriptions":descriptions,
+  //     "quantity": quantity,
+  //     "details": details,
+  //     "thumbnail": thumbnail,
+  //   };
+  // }
 
   static List<Products> generateItems() {
     return [
