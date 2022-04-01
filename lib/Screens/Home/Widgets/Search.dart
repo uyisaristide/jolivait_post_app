@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SearchBar extends StatelessWidget {
+import '../../../Models/Products.dart';
+
+class SearchBar extends StatefulWidget {
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
   final suggestionsList = ['clothes', 'food', 'drinks'];
+
+  // List<Products> productsList = Products.generateItems();
 
   @override
   Widget build(BuildContext context) {
+    var _searchQuery = TextEditingController();
     return Container(
       margin: const EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
       child: Column(children: [
@@ -12,6 +22,7 @@ class SearchBar extends StatelessWidget {
           Flexible(
             flex: 1,
             child: TextField(
+              controller: _searchQuery,
               cursorColor: Colors.grey,
               decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -45,6 +56,22 @@ class SearchBar extends StatelessWidget {
             ),
           )
         ]),
+        // SizedBox(
+        //     height: 100,
+        //     child: ListView.builder(
+        //
+        //         itemBuilder: (context, index) {
+        //       final productsSingle = productsList[index];
+        //       return ListTile(
+        //         leading: Image.asset(
+        //           productsSingle.thumbnail,
+        //           fit: BoxFit.cover,
+        //           width: 50,
+        //           height: 50,
+        //         ),
+        //         title: Text(productsSingle.names),
+        //       );
+        //     })),
         Row(
           children: suggestionsList
               .map((e) => Container(
@@ -64,4 +91,13 @@ class SearchBar extends StatelessWidget {
       ]),
     );
   }
+
+  // void searchProduct(String query) {
+  //   final suggestions = productsList.where((element) {
+  //     final productName = element.names.toLowerCase();
+  //     final input = query.toLowerCase();
+  //     return productName.contains(input);
+  //   }).toList();
+  //   setState(() => productsList = suggestions);
+  // }
 }
