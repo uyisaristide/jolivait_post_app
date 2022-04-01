@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './login_page.dart';
@@ -55,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Profile Page",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),

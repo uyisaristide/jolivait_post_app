@@ -51,17 +51,17 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SafeArea(
                 child: Container(
-                    padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    margin: EdgeInsets.fromLTRB(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    margin: const EdgeInsets.fromLTRB(
                         20, 10, 20, 10), // This will be the login form
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Hello',
                           style: TextStyle(
                               fontSize: 60, fontWeight: FontWeight.bold),
                         ),
-                        Text(
+                        const Text(
                           'Signin into your account',
                           style: TextStyle(color: Colors.grey),
                         ),
