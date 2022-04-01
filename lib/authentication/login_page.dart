@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping/Models/login_model.dart';
 import './common/theme_helper.dart';
 
 import 'forgot_password_page.dart';
@@ -75,10 +74,10 @@ class _LoginPageState extends State<LoginPage> {
                                     controller: _emailContoller,
                                     decoration: ThemeHelper()
                                         .textInputDecoration('User Name',
-                                            'Enter your user name'),
+                                        'Enter your user name'),
                                   ),
                                   decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
                                 SizedBox(height: 30.0),
                                 Container(
@@ -86,20 +85,20 @@ class _LoginPageState extends State<LoginPage> {
                                     controller: _passwordContoller,
                                     obscureText: true,
                                     decoration:
-                                        ThemeHelper().textInputDecoration(
-                                            'Password',
-                                            'Enter your password',
-                                            IconButton(
-                                                icon: Icon(Icons.visibility),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    hidePassword =
-                                                        !hidePassword;
-                                                  });
-                                                })),
+                                    ThemeHelper().textInputDecoration(
+                                        'Password',
+                                        'Enter your password',
+                                        IconButton(
+                                            icon: Icon(Icons.visibility),
+                                            onPressed: () {
+                                              setState(() {
+                                                hidePassword =
+                                                !hidePassword;
+                                              });
+                                            })),
                                   ),
                                   decoration:
-                                      ThemeHelper().inputBoxDecorationShaddow(),
+                                  ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
                                 SizedBox(height: 15.0),
                                 Container(
@@ -129,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                                     style: ThemeHelper().buttonStyle(),
                                     child: Padding(
                                       padding:
-                                          EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                      EdgeInsets.fromLTRB(40, 10, 40, 10),
                                       child: Text(
                                         'Sign In'.toUpperCase(),
                                         style: TextStyle(
@@ -166,7 +165,9 @@ class _LoginPageState extends State<LoginPage> {
                                         },
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).accentColor),
+                                          color: Theme
+                                              .of(context)
+                                              .accentColor),
                                     ),
                                   ])),
                                 ),
@@ -195,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 201) {
         print(response.statusCode);
         final SharedPreferences sharedPreferences =
-            await SharedPreferences.getInstance();
+        await SharedPreferences.getInstance();
         sharedPreferences.setString('token', _emailContoller.text);
 
         Navigator.pushReplacement(
