@@ -29,7 +29,7 @@ class _MenuItemsState extends State<MenuItems> {
         const Text("Unauthenticated");
       }
     } catch (e) {
-      throw e;
+      throw (e);
     }
   }
 
