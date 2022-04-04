@@ -71,19 +71,19 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           // ),
           ClipPath(
             child: Container(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
                     colors: [
                       Colors.teal,
                       Colors.tealAccent,
                     ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
+                    begin: FractionalOffset(0.0, 0.0),
+                    end: FractionalOffset(1.0, 0.0),
                     stops: [0.0, 1.0],
                     tileMode: TileMode.clamp),
               ),
             ),
-            clipper: new ShapeClipper([
+            clipper: ShapeClipper([
               Offset(width / 5, _height),
               Offset(width / 2, _height - 40),
               Offset(width / 5 * 4, _height - 80),
@@ -96,15 +96,15 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               height: _height - 40,
               child: Center(
                 child: Container(
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.only(
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(
                     left: 5.0,
                     top: 20.0,
                     right: 5.0,
                     bottom: 20.0,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(100),
                       topRight: Radius.circular(100),
                       bottomLeft: Radius.circular(60),

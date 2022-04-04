@@ -32,7 +32,7 @@ class _CartState extends State<Cart> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) =>
                         MyCart(productsList[index]),
-                    separatorBuilder: (_, index) => SizedBox(
+                    separatorBuilder: (_, index) => const SizedBox(
                       height: 5,
                     ),
                     itemCount: productsList.length),

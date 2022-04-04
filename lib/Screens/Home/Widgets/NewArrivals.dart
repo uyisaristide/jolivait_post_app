@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'CategoryList.dart';
 import 'package:http/http.dart' as http;
@@ -37,7 +40,7 @@ class NewArrivals extends StatefulWidget {
 
 class _NewArrivalsState extends State<NewArrivals> {
   var productsList = <Products>[];
-
+  dynamic errors = const CircularProgressIndicator(color: Colors.teal,);
   @override
   void initState() {
     super.initState();
@@ -45,25 +48,41 @@ class _NewArrivalsState extends State<NewArrivals> {
   }
 
   void readProducts() async {
-    final response = await http
-        .get(Uri.parse('https://product-mgt-api.herokuapp.com/api/product'));
-    if (response.statusCode == 200) {
-      // print(response.body);
-      // print("${jsonDecode(response.body)} some data.names");
-      final responseProducts = (jsonDecode(response.body) as Iterable)
-          .map((e) => Products.fromJson(e))
-          .toList();
-      // print("There is no error with data ${response.body.toString()}");
+    try{
+      final response = await http
+          .get(Uri.parse('https://product-mgt-api.herokuapp.com/api/product')).timeout(const Duration(seconds: 20));
+      if (response.statusCode == 200) {
+        // print(response.body);
+        // print("${jsonDecode(response.body)} some data.names");
+        final responseProducts = (jsonDecode(response.body) as Iterable)
+            .map((e) => Products.fromJson(e))
+            .toList();
+        // print("There is no error with data ${response.body.toString()}");
+        setState(() {
+          productsList = responseProducts;
+          // final dataMapping = Products.fromJson(jsonDecode(response.body));
+        });
+      } else if (response.statusCode == 401) {
+        print("This is contains the error ${response.body}");
+        print("Unauthenticated");
+        //return jsonDecode(response.body);
+      } else {
+        throw Exception("Data not found");
+      }
+    }on TimeoutException catch(_){
       setState(() {
-        productsList = responseProducts;
-        // final dataMapping = Products.fromJson(jsonDecode(response.body));
+        errors = const Text("Time out error, tap to retry!");
       });
-    } else if (response.statusCode == 401) {
-      print("This is contains the error ${response.body}");
-      print("Unauthenticated");
-      //return jsonDecode(response.body);
-    } else {
-      throw Exception("Data not found");
+      throw TimeoutException("Timeout");
+    }on SocketException catch(error){
+      setState(() {
+        errors = const Text("Turn on Wifi, tap to retry!");
+      });
+      throw "Message for error: $error Network exception";
+    }
+    catch(e){
+      const Text("Network error found");
+      throw Exception(e);
     }
   }
 
@@ -77,10 +96,19 @@ class _NewArrivalsState extends State<NewArrivals> {
           title: 'New items',
         ),
         productsList.isEmpty
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
+            ?Center(
+                child:InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: errors,
+                  ),
+                  onTap: (){
+                    // print("Printed successfully");
+                    setState((){
+                      Navigator.pushNamed(context, '/');
+                    });
+                  },
+                )
               )
             : Container(
                 child: SizedBox(

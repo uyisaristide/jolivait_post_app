@@ -10,7 +10,7 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final suggestionsList = ['clothes', 'food', 'drinks'];
 
-  // List<Products> productsList = Products.generateItems();
+  List<Products> productsList = Products.generateItems();
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,12 @@ class _SearchBarState extends State<SearchBar> {
           Flexible(
             flex: 1,
             child: TextField(
+              onChanged: (value){
+                setState(() {
+                  final results = productsList.where((element) => element.names.toLowerCase().contains(value)).toList();
+                  print("${results} printed as results");
+                });
+              },
               controller: _searchQuery,
               cursorColor: Colors.grey,
               decoration: InputDecoration(
@@ -92,12 +98,17 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 
-  // void searchProduct(String query) {
-  //   final suggestions = productsList.where((element) {
-  //     final productName = element.names.toLowerCase();
-  //     final input = query.toLowerCase();
-  //     return productName.contains(input);
-  //   }).toList();
-  //   setState(() => productsList = suggestions);
-  // }
+  void searchProduct(String query) {
+    try {
+      final suggestions = productsList.where((element) {
+        final productName = element.names.toLowerCase();
+        final input = query.toLowerCase();
+        return productName.contains(input);
+      }).toList();
+      // print("printed successfully ${productsList.toList()}");
+      setState(() => productsList = suggestions);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

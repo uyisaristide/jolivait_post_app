@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:shopping/Screens/Menu/Widgets/ItemCard.dart';
@@ -13,11 +15,15 @@ class MenuItems extends StatefulWidget {
 class _MenuItemsState extends State<MenuItems> {
   // final productsList = Products.generateItems();
   var productsList = <Products>[];
+  dynamic errors = const CircularProgressIndicator(
+    color: Colors.teal,
+  );
 
   void fetchMenu() async {
-    final responses = await http
-        .get(Uri.parse('https://product-mgt-api.herokuapp.com/api/product'));
     try {
+      final responses = await http
+          .get(Uri.parse('https://product-mgt-api.herokuapp.com/api/product'))
+          .timeout(const Duration(seconds: 20));
       if (responses.statusCode == 200) {
         final mapping = (jsonDecode(responses.body) as Iterable)
             .map((e) => Products.fromJson(e))
@@ -28,8 +34,19 @@ class _MenuItemsState extends State<MenuItems> {
       } else if (responses.statusCode == 401) {
         const Text("Unauthenticated");
       }
+    } on TimeoutException catch (_) {
+      setState(() {
+        errors = const Text("Time out error, tap to retry!");
+      });
+      throw TimeoutException("Timeout");
+    } on SocketException catch (error) {
+      setState(() {
+        errors = const Text("Turn on Wifi, tap to retry!");
+      });
+      throw "Message for error: $error Network exception";
     } catch (e) {
-      throw e;
+      const Text("Network error found");
+      throw Exception(e);
     }
   }
 
@@ -56,8 +73,17 @@ class _MenuItemsState extends State<MenuItems> {
           ),
           productsList.isEmpty
               ? Center(
-                  child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  child: InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: errors,
+                  ),
+                  onTap: () {
+                    // print("Printed successfully");
+                    setState(() {
+                      // Navigator.pushNamed(context, '/');
+                    });
+                  },
                 ))
               : Container(
                   height: 500,
