@@ -2,5 +2,5 @@
 - cart page
 - managing sessions 
 - activating show and hide password icon
-- notifying on what is going on during failure
+- Error handling
 - setting timeout when running some things
