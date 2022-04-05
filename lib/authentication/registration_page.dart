@@ -22,6 +22,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   bool checkboxValue = false;
 
   bool hidePassword = true;
+  bool hidecPassword = true;
 
   // User? _user;
 
@@ -147,7 +148,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         Container(
                           child: TextFormField(
                             controller: passwordController,
-                            obscureText: true,
+                            obscureText: hidePassword,
                             decoration: ThemeHelper().textInputDecoration(
                                 "Password",
                                 "Enter your password",
@@ -171,7 +172,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         Container(
                           child: TextFormField(
                             controller: cpasswordController,
-                            obscureText: hidePassword,
+                            obscureText: hidecPassword,
                             decoration: ThemeHelper().textInputDecoration(
                                 "Confirm",
                                 "Confirm your password",
@@ -179,7 +180,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     icon: Icon(Icons.visibility),
                                     onPressed: () {
                                       setState(() {
-                                        hidePassword = !hidePassword;
+                                        hidecPassword = !hidecPassword;
                                       });
                                     })),
                             validator: (val) {
@@ -199,7 +200,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 Row(
                                   children: <Widget>[
                                     Checkbox(
-                                        checkColor: Colors.teal,
+                                        checkColor: Colors.white,
                                         value: checkboxValue,
                                         onChanged: (value) {
                                           setState(() {

@@ -73,8 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                                   child: TextField(
                                     controller: _emailContoller,
                                     decoration: ThemeHelper()
-                                        .textInputDecoration('User Name',
-                                        'Enter your user name'),
+                                        .textInputDecoration('User Email',
+                                        'Enter your Email'),
                                   ),
                                   decoration:
                                   ThemeHelper().inputBoxDecorationShaddow(),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Container(
                                   child: TextFormField(
                                     controller: _passwordContoller,
-                                    obscureText: true,
+                                    obscureText: hidePassword,
                                     decoration:
                                     ThemeHelper().textInputDecoration(
                                         'Password',
@@ -184,6 +184,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
+    
     String url = "https://product-mgt-api.herokuapp.com/api/login";
 
     if (_emailContoller.text.isNotEmpty && _passwordContoller.text.isNotEmpty) {

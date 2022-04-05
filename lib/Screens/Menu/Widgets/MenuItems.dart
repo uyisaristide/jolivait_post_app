@@ -45,6 +45,7 @@ class _MenuItemsState extends State<MenuItems> {
       });
       throw "Message for error: $error Network exception";
     } catch (e) {
+
       const Text("Network error found");
       throw Exception(e);
     }

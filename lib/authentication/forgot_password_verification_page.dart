@@ -22,7 +22,7 @@ class _ForgotPasswordVerificationPageState
 
   @override
   Widget build(BuildContext context) {
-    double _headerHeight = 300;
+    double _headerHeight = 150;
 
     return Scaffold(
         backgroundColor: Colors.white,
