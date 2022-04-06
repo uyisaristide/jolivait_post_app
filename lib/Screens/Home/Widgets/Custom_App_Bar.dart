@@ -38,7 +38,7 @@ class CustomAppBar extends StatelessWidget {
           ]),
           Stack(children: [
             Container(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
@@ -52,12 +52,13 @@ class CustomAppBar extends StatelessWidget {
               child: IconButton(
                 color: Colors.grey,
                 onPressed: ()=>Navigator.push(context, CupertinoPageRoute(builder: (context)=>Cart())),
-                icon: const Icon(Icons.shopping_cart_outlined),
+                icon: const Icon(Icons.shopping_cart_outlined, size: 20,),
               ),
             ),
             Positioned(
-                right: 10,
-                left: 10,
+                right: 0.0,
+                bottom: 40,
+                left: 20,
                 child: Container(
                   width: 10.0,
                   height: 10.0,
