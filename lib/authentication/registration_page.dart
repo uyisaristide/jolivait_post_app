@@ -1,3 +1,7 @@
+import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar_helper.dart';
+import 'package:another_flushbar/flushbar_route.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -258,6 +262,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 register();
+
                                 // final User? user = await createUser(
                                 //     name, email, password, cpassword);
 
@@ -265,6 +270,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 //   _user = user;
                                 // });
 
+                              } if (passwordController!=cpasswordController) {
+                                print('mismatch');
+                                Flushbar(
+                                  title: 'password mismactch',
+                                  message:
+                                      'Please be careful cause the password you are entering is not the same as the one you are confirming',
+                                  duration: Duration(seconds: 6),
+                                )..show(context);
                               }
                             },
                           ),

@@ -1,42 +1,58 @@
-// import 'dart:convert';
 
-// import 'package:flutter/cupertino.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shopping/Models/login_model.dart';
 
-// class sharedServices {
-//   static Future<bool> isLoggedIn() async {
-//     final prefs = await SharedPreferences.getInstance();
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-//     return prefs.getString('login_detail') != null ? true : false;
-//   }
 
-//   static Future<LoginResponseModel> loginDetails() async {
-//     final prefs = await SharedPreferences.getInstance();
+import 'package:shopping/authentication/services/login_interface.dart';
+import 'package:shopping/db/UserModel.dart';
 
-//     return prefs.getString('login_detail') != null
-//         ? LoginResponseModel.fromJson(
-//             jsonDecode(
-//               prefs.getStringList('login_detail'),
-//             ),
-//           )
-//         : null;
-//   }
 
-//   static Future<void> setLoginDetails(LoginResponseModel responseModel) async {
-//     final prefs = await SharedPreferences.getInstance();
+class LoginService extends ILogin {
+  @override
+  Future<UserModel?> login(String email, String password) async {
+    final api = Uri.parse('https://product-mgt-api.herokuapp.com/api/login');
+    final data = {"email": email, "password": password};
+    
+    http.Response response;
+    response = await http.post(api, body: data);
+    if (response.statusCode == 201) {
+      SharedPreferences storage = await SharedPreferences.getInstance();
+      final body = json.decode(response.body);
+      await storage.setString('TOKEN', body['token']);
+      await storage.setString('EMAIL', email);
+      return UserModel(email: email, token: body['token']);
+    } else {
+      return null;
+    }
+  }
 
-//     return prefs.getString(
-//         'login_detail',
-//         responseModel != null
-//             ? jsonEncode(
-//                 responseModel.toJson(),
-//               )
-//             : null);
-//   }
+  @override
+  Future<UserModel?> getUser() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    final token = storage.getString('TOKEN');
+    final email = storage.getString('EMAIL');
+    if (token != null && email != null) {
+      return UserModel(email: email, token: token);
+    } else {
+      return null;
+    }
+  }
 
-//   static Future<void> logout(BuildContext context) async {
-//     await setLoginDetails(null);
-//     Navigator.of(context).pushReplacementNamed('/login');
-//   }
-// }
+  @override
+  Future<bool> logout() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    final email = storage.getString('EMAIL');
+    final token = storage.getString('TOKEN');
+    if (email != null && token != null) {
+      await storage.remove('TOKEN');
+      await storage.remove('EMAIL');
+      return true;
+      
+    } else {
+      return false;
+    }
+    
+  }
+}
