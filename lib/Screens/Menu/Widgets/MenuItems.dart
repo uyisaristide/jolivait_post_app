@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shopping/Screens/Home/Widgets/Search.dart';
 import 'package:shopping/Screens/Menu/Widgets/ItemCard.dart';
 import 'package:http/http.dart' as http;
 import '../../../Models/Products.dart';
@@ -63,6 +64,7 @@ class _MenuItemsState extends State<MenuItems> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SearchBar(),
           const Padding(
             padding: EdgeInsets.only(top: 20, bottom: 15),
             child: Center(
@@ -85,7 +87,8 @@ class _MenuItemsState extends State<MenuItems> {
                       // Navigator.pushNamed(context, '/');
                     });
                   },
-                ))
+                )
+          )
               : Container(
                   height: 500,
                   child: SizedBox(
@@ -95,7 +98,7 @@ class _MenuItemsState extends State<MenuItems> {
                             ? const Center(
                                 child: Text("There is no products"),
                               )
-                            : ItemMenu(productsList[index]),
+                            : ItemMenu(productsList.reversed.toList()[index]),
                         separatorBuilder: (_, index) => const SizedBox(
                               height: 5,
                             ),

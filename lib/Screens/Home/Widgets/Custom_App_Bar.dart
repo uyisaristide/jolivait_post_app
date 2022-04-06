@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping/Screens/Cart/MyCart.dart';
+
+import '../../Cart/CartScreen.dart';
 
 class CustomAppBar extends StatelessWidget {
   @override
@@ -34,7 +38,7 @@ class CustomAppBar extends StatelessWidget {
           ]),
           Stack(children: [
             Container(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
@@ -45,12 +49,16 @@ class CustomAppBar extends StatelessWidget {
                         blurRadius: 0.1,
                         offset: const Offset(0, 1))
                   ]),
-              child:
-                  const Icon(Icons.shopping_cart_outlined, color: Colors.grey),
+              child: IconButton(
+                color: Colors.grey,
+                onPressed: ()=>Navigator.push(context, CupertinoPageRoute(builder: (context)=>Cart())),
+                icon: const Icon(Icons.shopping_cart_outlined, size: 20,),
+              ),
             ),
             Positioned(
-                right: 10,
-                left: 10,
+                right: 0.0,
+                bottom: 40,
+                left: 20,
                 child: Container(
                   width: 10.0,
                   height: 10.0,
