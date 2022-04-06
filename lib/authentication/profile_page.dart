@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping/db/UserModel.dart';
 import 'package:shopping/main.dart';
 import './login_page.dart';
 import './splash_screen.dart';
@@ -11,6 +12,7 @@ import './widgets/header_widget.dart';
 import 'forgot_password_page.dart';
 import 'forgot_password_verification_page.dart';
 import 'registration_page.dart';
+import 'services/shared_services.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -23,31 +25,9 @@ class _ProfilePageState extends State<ProfilePage> {
   double _drawerIconSize = 24;
   double _drawerFontSize = 17;
 
-  // String? token;
-  @override
-  // void initState() {
-  //   isLogged().whenComplete(() async {
-  //     Timer(
-  //       Duration(seconds: 1),
-  //       () => Get.to(
-  //         token == null ? LoginPage() : ProfilePage(),
-  //       ),
-  //     );
-  //   });
-  //   super.initState();
-  // }
+  late var finalToken;
 
-  // @override
-  // Future isLogged() async {
-  //   final SharedPreferences sharedPreferences =
-  //       await SharedPreferences.getInstance();
-  //   var obtainToken = sharedPreferences.getString('token');
-
-  //   setState(() {
-  //     token = obtainToken;
-  //   });
-  //   print(token);
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -397,11 +377,22 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> logout() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    final logoutValue = await LoginService().logout();
+    if (logoutValue == true) {
+      Navigator.pushNamed(context, '/');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 3),
+          content: Text(
+            'error with your token, have to login again',
+          ),
+        ),
+      );
+    }
 
-    sharedPreferences.remove('token');
-
-    Navigator.pushNamed(context, '/');
+    ;
   }
+
+  
 }
