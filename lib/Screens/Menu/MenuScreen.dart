@@ -15,9 +15,7 @@ class _MenuScreenState extends State<MenuScreen> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SearchBar(),
-          MenuItems()],
+        children: [MenuItems()],
       ),
     );
   }

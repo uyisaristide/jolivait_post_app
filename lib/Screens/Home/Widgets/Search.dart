@@ -25,7 +25,7 @@ class _SearchBarState extends State<SearchBar> {
               onChanged: (value){
                 setState(() {
                   final results = productsList.where((element) => element.names.toLowerCase().contains(value)).toList();
-                  print("${results} printed as results");
+                  // print("${results} printed as results");
                 });
               },
               controller: _searchQuery,
@@ -49,18 +49,6 @@ class _SearchBarState extends State<SearchBar> {
                   )),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(15.0)),
-            child: Image.asset(
-              "assets/icons/filter.png",
-              width: 20,
-              height: 20,
-            ),
-          )
         ]),
         // SizedBox(
         //     height: 100,
@@ -78,22 +66,38 @@ class _SearchBarState extends State<SearchBar> {
         //         title: Text(productsSingle.names),
         //       );
         //     })),
-        Row(
-          children: suggestionsList
-              .map((e) => Container(
-                    padding: const EdgeInsets.all(5.0),
-                    margin: const EdgeInsets.only(top: 10.0, right: 10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Theme.of(context).accentColor,
-                    ),
-                    child: Text(
-                      e,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ))
-              .toList(),
-        ),
+
+
+
+
+
+
+        //Suggestions
+
+
+
+
+
+
+
+
+
+        // Row(
+        //   children: suggestionsList
+        //       .map((e) => Container(
+        //             padding: const EdgeInsets.all(5.0),
+        //             margin: const EdgeInsets.only(top: 10.0, right: 10.0),
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(10.0),
+        //               color: Theme.of(context).accentColor,
+        //             ),
+        //             child: Text(
+        //               e,
+        //               style: const TextStyle(color: Colors.white),
+        //             ),
+        //           ))
+        //       .toList(),
+        // ),
       ]),
     );
   }

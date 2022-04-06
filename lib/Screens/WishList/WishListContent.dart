@@ -3,21 +3,25 @@ import 'package:shopping/db/DatabaseHelper.dart';
 import '../../Models/Products.dart';
 import '../Details/Details.dart';
 
-class MyCart extends StatelessWidget {
+class WishContent extends StatefulWidget {
   final Products products;
+  WishContent(this.products);
 
-  MyCart(this.products);
+  @override
+  State<WishContent> createState() => _WishContentState();
+}
 
+class _WishContentState extends State<WishContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
         onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => DetailScreen(products))),
+            MaterialPageRoute(builder: (context) => DetailScreen(widget.products))),
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Stack(
             children: [
               Padding(
@@ -27,7 +31,7 @@ class MyCart extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image.asset(
-                        products.thumbnail,
+                        widget.products.thumbnail,
                         width: 80.0,
                       ),
                     ),
@@ -38,14 +42,14 @@ class MyCart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          products.names,
+                          widget.products.names,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, height: 1.5),
                         ),
-                        Text(products.descriptions,
+                        Text(widget.products.descriptions,
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, height: 1.5)),
-                        Text("Rwf ${products.price}",
+                        Text("Rwf ${widget.products.price}",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -64,11 +68,15 @@ class MyCart extends StatelessWidget {
                       color: Colors.white.withOpacity(0.9),
                       shape: BoxShape.circle),
                   child: IconButton(
-                    icon: const Icon(Icons.favorite),
-                    onPressed: () async {
-                      final deletes = await DatabaseHelper.instance.deleteWishList(products.id);
-                      print("Deleted successfully $deletes");
+                    onPressed: () async{
+                      setState(() {});
+                      final deletes = await DatabaseHelper.instance.deleteWishList(widget.products.id);
+                      if(deletes > 1){
+                        setState(() { });
+                      }
                     },
+                    iconSize: 20,
+                    icon: const Icon(Icons.favorite),
                     color: Colors.red,
                   ),
                 ),

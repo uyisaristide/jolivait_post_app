@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping/Models/Products.dart';
+import 'package:shopping/Screens/Cart/ModelCart.dart';
+import 'package:shopping/db/DatabaseHelper.dart';
 
 class AddToCart extends StatelessWidget {
   final Products products;
@@ -40,7 +41,14 @@ class AddToCart extends StatelessWidget {
                       ),
                       elevation: 0.0,
                       primary: Theme.of(context).primaryColor),
-                  onPressed: () {},
+                  onPressed: () => DatabaseHelper.instance.addToCart(
+                        CartModel(
+                            id: null,
+                            name: products.names,
+                            quantity: 1,
+                            productId: products.id,
+                            userId: 100),
+                      ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -53,7 +61,7 @@ class AddToCart extends StatelessWidget {
                       SizedBox(
                         width: 10.0,
                       ),
-                      Icon(Icons.shopping_cart_outlined)
+                      Icon(Icons.shopping_cart_outlined),
                     ],
                   )),
             ),

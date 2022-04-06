@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping/Models/Products.dart';
+import 'package:shopping/Screens/WishList/WishListModel.dart';
+import 'package:shopping/db/DatabaseHelper.dart';
 
 import '../../Details/Details.dart';
 
@@ -63,11 +65,73 @@ class ItemMenu extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.9),
                       shape: BoxShape.circle),
-                  child: const Icon(
-                    Icons.favorite,
+                  child: IconButton(
+                    iconSize: 15,
+                    icon: const Icon(Icons.favorite_border_outlined),
+                    onPressed: () async {
+                      final avStates =
+                          await DatabaseHelper.instance.findSingle(products.id);
+                      if (avStates == false) {
+                        DatabaseHelper.instance.addWishlist(WishListModel(
+                            id: null,
+                            name: products.names,
+                            price: products.price.toInt(),
+                            productId: products.id,
+                            quantity: products.quantity,
+                            description: products.descriptions,
+                            details: products.details.toString(),
+                            thumbnail: products.thumbnail));
+                      }else{
+                        print("Can not duplicate data");
+                      }
+                      // DatabaseHelper.instance.addWishlist(
+                      //     WishListModel(
+                      //         id: null,
+                      //         name: products.names,
+                      //         price: products.price.toInt(),
+                      //         productId: products.id,
+                      //         quantity: products.quantity,
+                      //         description: products.descriptions,
+                      //         details: products.details.toString(),
+                      //         thumbnail: products.thumbnail));
+                    },
                     color: Colors.red,
-                    size: 15,
                   ),
+
+                  // DatabaseHelper.instance.wishFound
+                  //     ?
+                  // IconButton(
+                  //         iconSize: 15,
+                  //         icon: const Icon(Icons.favorite_border_outlined),
+                  //         onPressed: () {
+                  //           print("${products.price.runtimeType} is the runtype of price");
+                  //           DatabaseHelper.instance.addWishlist(WishListModel(
+                  //               id: null,
+                  //               name: products.names,
+                  //               price: products.price.toInt(),
+                  //               quantity: products.quantity,
+                  //               description: products.descriptions,
+                  //               details: products.details.toString(),
+                  //               thumbnail: products.thumbnail));
+                  //         },
+                  //         color: Colors.red,
+                  //       )
+                  //     :
+                  // IconButton(
+                  //         iconSize: 15,
+                  //         icon: const Icon(Icons.favorite),
+                  //         onPressed: () {
+                  //           DatabaseHelper.instance.addWishlist(WishListModel(
+                  //               id: products.id,
+                  //               name: products.names,
+                  //               price: products.price,
+                  //               quantity: products.quantity,
+                  //               description: products.descriptions,
+                  //               details: "Some few details",
+                  //               thumbnail: products.thumbnail));
+                  //         },
+                  //         color: Colors.red,
+                  //       ),
                 ),
               )
             ],
@@ -76,4 +140,38 @@ class ItemMenu extends StatelessWidget {
       ),
     );
   }
+
+// _findProduct(int id) async {
+//   if (await DatabaseHelper.instance.findSingle(id) == false) {
+//     var status = await DatabaseHelper.instance.findSingle(id);
+//     print("This is wishList status $status");
+//     return
+//
+//     return IconButton(
+//       iconSize: 15,
+//       icon: const Icon(Icons.favorite_border_outlined),
+//       onPressed: () {
+//         print("${products.price.runtimeType} is the runtype of price");
+//         DatabaseHelper.instance.addWishlist(WishListModel(
+//             id: null,
+//             name: products.names,
+//             price: products.price.toInt(),
+//             quantity: products.quantity,
+//             description: products.descriptions,
+//             details: products.details.toString(),
+//             thumbnail: products.thumbnail));
+//       },
+//       color: Colors.red,
+//     );
+//   }else{
+//
+//     return IconButton(
+//       iconSize: 15,
+//       icon: const Icon(Icons.favorite),
+//       onPressed: () =>const SnackBar(content: Text("Already saved to wishlist"),),
+//       color: Colors.red,
+//     );
+//
+//   }
+// }
 }

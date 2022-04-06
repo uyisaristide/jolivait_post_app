@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shopping/Screens/WishList/WishListContent.dart';
 import 'package:shopping/db/DatabaseHelper.dart';
 import '../../Models/Products.dart';
-import 'MyCart.dart';
 
-class Cart extends StatefulWidget {
+class WishList extends StatefulWidget {
   @override
-  State<Cart> createState() => _CartState();
+  State<WishList> createState() => _WishListState();
 }
 
-class _CartState extends State<Cart> {
+class _WishListState extends State<WishList> {
   var productsList = Products.generateItems();
 
   @override
@@ -32,29 +32,33 @@ class _CartState extends State<Cart> {
               child: SizedBox(
                   child: FutureBuilder<List<Products>>(
                       future: DatabaseHelper.instance.getWishList(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Products>> snapshot) {
+                      builder: (BuildContext context, AsyncSnapshot<List<Products>> snapshot) {
+
+                        if(!snapshot.hasData){
+                          return Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),);
+                        }
+                        final allData = snapshot.data as List<Products>;
+                        print("Saved products are: ${allData.length}");
+
                         if (snapshot.hasData) {
-                          try {
-                            final wishObj = snapshot.data;
-                            // print("This is the data ${snapshot.data}");
-                            return snapshot.data!.isNotEmpty
-                                ? ListView.separated(
-                                    scrollDirection: Axis.vertical,
-                                    itemBuilder: (context, index) =>
-                                        MyCart(wishObj![index]),
-                                    separatorBuilder: (_, index) =>
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                    itemCount: productsList.length)
-                                : Center(child: Text("Data is null"));
-                          } catch (e) {
-                            print("This error occured $e");
-                            throw e;
-                          }
+                          return snapshot.data!.isEmpty
+                              ? const Center(child: Text("Wish list Empty"),)
+                              :ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  WishContent(allData[index]),
+                              separatorBuilder: (_, index) =>
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              itemCount: allData.length);
                         } else if (snapshot.hasError) {
-                          return Icon(Icons.error_outline);
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Icon(Icons.error_outline);
                         } else {
                           return CircularProgressIndicator();
                         }
@@ -62,10 +66,10 @@ class _CartState extends State<Cart> {
                   // ListView.separated(
                   //     scrollDirection: Axis.vertical,
                   //     itemBuilder: (context, index) =>
-                  //         MyCart(productsList[index]),
+                  //         WishContent(productsList.reversed.toList()[index]),
                   //     separatorBuilder: (_, index) => const SizedBox(
-                  //       height: 5,
-                  //     ),
+                  //           height: 5,
+                  //         ),
                   //     itemCount: productsList.length),
                   ),
             ),

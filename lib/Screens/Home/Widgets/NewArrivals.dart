@@ -116,12 +116,12 @@ class _NewArrivalsState extends State<NewArrivals> {
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    itemBuilder: (context, index)=> Items(productsList[index]),
+                    itemBuilder: (context, index)=> Items(productsList.reversed.toList()[index]),
                     separatorBuilder: (_, index) => const SizedBox(
                           width: 5,
                         ),
-                    itemCount: ((productsList.length) ~/ 5) > 0
-                        ? (productsList.length) ~/ 5
+                    itemCount: ((productsList.length) ~/ 10) > 0
+                        ? (productsList.length) ~/ 20
                         : productsList.length),
               )),
       ],
