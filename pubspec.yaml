@@ -45,6 +45,9 @@ dependencies:
   otp_text_field: ^1.1.1
   flutter_typeahead: ^3.2.4
   provider: ^6.0.2
+  another_flushbar: ^1.10.28
+  dio: ^4.0.6
+  
 
   
 dev_dependencies:
