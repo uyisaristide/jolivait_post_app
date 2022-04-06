@@ -144,18 +144,11 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     onPressed: () async {
                                       signIn();
-
-                                      // if (validateAndSave()) {
-                                      //   print(requestModel.toJson());
-                                      // }
-
-                                      //After successful login we will redirect to profile page. Let's create profile page now
                                     },
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                                  //child: Text('Don\'t have an account? Create'),
                                   child: Text.rich(TextSpan(children: [
                                     TextSpan(text: "Don\'t have an account? "),
                                     TextSpan(
@@ -193,35 +186,17 @@ class _LoginPageState extends State<LoginPage> {
       UserModel? user = await _loginService.login(
           _emailContoller.text, _passwordContoller.text);
 
-      print(user);
       if (user != null) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ProfilePage()));
       }
-      // final response = await http.post(Uri.parse(url), body: {
-      //   'email': _emailContoller.text,
-      //   'password': _passwordContoller.text,
-      // });
-      // print(response.statusCode);
-
-      // if (response.statusCode == 201) {
-      //   print(response.statusCode);
-      //   final SharedPreferences sharedPreferences =
-      //       await SharedPreferences.getInstance();
-      //   sharedPreferences.setString('token', _emailContoller.text);
-      //   print(response.body);
-
-      //   Navigator.pushReplacement(
-      //       context, MaterialPageRoute(builder: (context) => ProfilePage()));
-      // } else {
-      //   print(response.body);
+      // else {
       //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //       content: Text('ivalid crentials'),
-      //     ),
-      //   );
+      //   SnackBar(
+      //     content: Text(response.),
+      //   ),
+      // );
       // }
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

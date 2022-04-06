@@ -19,7 +19,8 @@ class _NavigationScreensState extends State<NavigationScreens> {
   void initState() {
     authStatus().whenComplete(() async {
       if (finalToken != null) {
-        Navigator.pushNamed(context, '/profile');
+        setState(() {Navigator.pushNamed(context, '/profile');});
+        
       } else {
         setState(() {});
       }

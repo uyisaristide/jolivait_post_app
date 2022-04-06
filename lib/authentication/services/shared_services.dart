@@ -1,22 +1,19 @@
-
-
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-
 import 'package:shopping/authentication/services/login_interface.dart';
 import 'package:shopping/db/UserModel.dart';
-
 
 class LoginService extends ILogin {
   @override
   Future<UserModel?> login(String email, String password) async {
     final api = Uri.parse('https://product-mgt-api.herokuapp.com/api/login');
     final data = {"email": email, "password": password};
-    
+
     http.Response response;
     response = await http.post(api, body: data);
+    
     if (response.statusCode == 201) {
       SharedPreferences storage = await SharedPreferences.getInstance();
       final body = json.decode(response.body);
@@ -24,7 +21,11 @@ class LoginService extends ILogin {
       await storage.setString('EMAIL', email);
       return UserModel(email: email, token: body['token']);
     } else {
-      return null;
+
+      final errorResponse = jsonDecode(response.body);
+    final errorMessage = errorResponse['message'];
+
+      print(errorMessage);
     }
   }
 
@@ -49,10 +50,8 @@ class LoginService extends ILogin {
       await storage.remove('TOKEN');
       await storage.remove('EMAIL');
       return true;
-      
     } else {
       return false;
     }
-    
   }
 }
