@@ -1,4 +1,5 @@
 - [ ] activating search bar
 - [ ] cart page
-- [ ] managing sessions
+- [*] managing sessions
+- [*] Error handling
 - [ ] activating show and hide password icon
