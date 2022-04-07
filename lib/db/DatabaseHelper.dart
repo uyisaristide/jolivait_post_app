@@ -23,8 +23,9 @@ class DatabaseHelper {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, "CartDatabase.db");
     return await openDatabase(path,
-        version: 4, onCreate: _onCreate,);
+        version: 6, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
+
 //version 1, created two tables, 2, added column, 3 truncated trable, version 4 no truncate, version 5 userId
   Future _onCreate(Database db, int version) async {
     try {
@@ -58,12 +59,15 @@ class DatabaseHelper {
       throw e;
     }
   }
-  //
-  // FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-  //   await db.execute('''
-  //     ALERT TABLE
-  //   ''');
-  // }
+
+  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    // await db.execute('''
+    //   ALTER TABLE wishList ADD COLUMN productId INTEGER
+    // ''');
+    await db.execute('''
+      ALTER TABLE wishList ADD COLUMN userId INTEGER
+    ''');
+  }
 
   //Retrieving CartList
   Future<List<CartModel>> cartList() async {

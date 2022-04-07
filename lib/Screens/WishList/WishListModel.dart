@@ -7,12 +7,14 @@ class WishListModel {
   String description;
   String details;
   String thumbnail;
+  int userId;
 
   WishListModel(
       {required this.id,
       required this.name,
         required this.productId,
       required this.price,
+        required this.userId,
       required this.quantity,
       required this.description,
       required this.details,
@@ -26,6 +28,7 @@ class WishListModel {
         productId: fromJson['id'],
         name: fromJson['name'],
         price: fromJson['price'],
+        userId: fromJson['id'],
         quantity: fromJson['quantity'],
         details: "assets/images/arrival1.png",
         thumbnail: "assets/images/arrival1.png");
@@ -39,13 +42,15 @@ class WishListModel {
         "description": description,
         "details": details,
         "thumbnail": thumbnail,
-        "productId":id
+        "productId":productId,
+        "userId":userId
       };
 
   static List<WishListModel> generateItems() {
     return [
       WishListModel(
           id: 1000,
+          userId: 100,
           name: 'Gucci Shirt',
           price: 1000,
           productId: 200,
@@ -55,6 +60,7 @@ class WishListModel {
           thumbnail: "assets/images/arrival1.png"),
       WishListModel(
           id: 1100,
+          userId: 100,
           name: 'T chirt, Polo',
           price: 12300,
           description: "Hardcoded strings",
@@ -63,5 +69,6 @@ class WishListModel {
           details: "assets/images/detail2.png",
           thumbnail: "assets/images/arrival2.png"),
     ];
+
   }
 }

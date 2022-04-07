@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping/Screens/Profile/Profile.dart';
 import 'package:shopping/db/UserModel.dart';
 import './common/theme_helper.dart';
 
@@ -17,7 +18,9 @@ import 'widgets/header_widget.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final VoidCallback? callback;
+
+  const LoginPage({Key? key, this.callback}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -65,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                         //   style: TextStyle(
                         //       fontSize: 60, fontWeight: FontWeight.bold),
                         // ),
-                        Text(
+                        const Text(
                           'Signin into your account',
                           style: TextStyle(color: Colors.grey),
                         ),
@@ -84,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 30.0),
+                                const SizedBox(height: 30.0),
                                 Container(
                                   child: TextFormField(
                                     controller: _passwordContoller,
@@ -105,9 +108,10 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 15.0),
+                                const SizedBox(height: 15.0),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(10, 0, 10, 20),
                                   alignment: Alignment.topRight,
                                   child: GestureDetector(
                                     onTap: () {
@@ -115,10 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ForgotPasswordPage()),
+                                                const ForgotPasswordPage()),
                                       );
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Forgot your password?",
                                       style: TextStyle(
                                         color: Colors.grey,
@@ -132,11 +136,11 @@ class _LoginPageState extends State<LoginPage> {
                                   child: ElevatedButton(
                                     style: ThemeHelper().buttonStyle(),
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          40, 10, 40, 10),
                                       child: Text(
                                         'Sign In'.toUpperCase(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
@@ -186,18 +190,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> signIn() async {
+  Future<ProfilePage?> signIn() async {
     // String url = "https://product-mgt-api.herokuapp.com/api/login";
 
     if (_emailContoller.text.isNotEmpty && _passwordContoller.text.isNotEmpty) {
       UserModel? user = await _loginService.login(
           _emailContoller.text, _passwordContoller.text);
 
-      print(user);
-      if (user != null) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfilePage()));
-      }
+
+        if (user != null) {
+          setState(() {
+          print("The user found here! ${user.email}");
+          widget.callback!.call();
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('required'),
+            ),
+          );
+        }
+
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       // final response = await http.post(Uri.parse(url), body: {
       //   'email': _emailContoller.text,
       //   'password': _passwordContoller.text,
@@ -221,13 +236,6 @@ class _LoginPageState extends State<LoginPage> {
       //     ),
       //   );
       // }
-
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('required'),
-        ),
-      );
     }
   }
 }

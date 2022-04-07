@@ -1,27 +1,73 @@
-import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:shopping/authentication/login_page.dart';
-import '../../authentication/common/theme_helper.dart';
-import '../../authentication/forgot_password_page.dart';
 import '../../authentication/profile_page.dart';
-import '../../authentication/registration_page.dart';
-import '../../authentication/widgets/header_widget.dart';
-import './../../authentication/splash_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final VoidCallback? callback;
+
+  const ProfileScreen({Key? key, this.callback}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String loggedToken = '';
+  var currentToken = '';
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
 
+  // @override
+  // void initState() {
+
+  //   super.initState();
+  //   authStatus().whenComplete(() async {
+  //     if(loggedToken != null){
+  //       currentToken = loggedToken;
+  //     }
+  //   });
+  // }
+
+  void initState() {
+    super.initState();
+    authStatus().whenComplete(() async {
+      if (loggedToken != null) {
+        // print("$loggedToken this logged");
+      } else {
+        setState(() {});
+      }
+    });
+  }
+
+  Future authStatus() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String? myToken = sharedPreferences.getString("TOKEN");
+    setState(() {
+      loggedToken = myToken!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return LoginPage();
+    return loggedToken.isNotEmpty
+        ? ProfilePage(
+            callback: () => setState(() {Navigator.pop(context);}),
+          )
+        : LoginPage(callback: () {
+            setState(() {
+              Navigator.pop(context);
+            });
+          });
+    if (loggedToken.isNotEmpty) {
+    } else {
+      return LoginPage(
+        callback: widget.callback,
+      );
+    }
     // return SingleChildScrollView(
     //   child: SafeArea(
     //     child: Column(

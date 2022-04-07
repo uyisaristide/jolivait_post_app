@@ -18,36 +18,42 @@ class _NavigationScreensState extends State<NavigationScreens> {
 
   @override
   void initState() {
+    super.initState();
     authStatus().whenComplete(() async {
       if (finalToken != null) {
-        Navigator.pushNamed(context, '/profile');
       } else {
         setState(() {});
       }
     });
-
-    super.initState();
   }
 
   Future authStatus() async {
     final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    await SharedPreferences.getInstance();
     var currentToken = sharedPreferences.getString("TOKEN");
     setState(() {
       finalToken = currentToken;
     });
-    print(finalToken);
+    print("This is the logged user token $finalToken");
   }
 
   int currentIndex = 0;
   final bottomList = ["home", "menu", "user"];
-  final screens = [
-    const HomePage(),
-    const MenuScreen(),
-    Cart(),
-    WishList(),
-    const ProfileScreen()
-  ];
+
+  List<Widget> get screens =>
+      [
+        HomePage(callback: () {
+          setState(() {
+            currentIndex = 2;
+          });
+        },),
+        const MenuScreen(),
+        Cart(),
+        WishList(),
+        ProfileScreen(callback: () => setState(() {
+          currentIndex = 4;
+        }),)
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +66,19 @@ class _NavigationScreensState extends State<NavigationScreens> {
               currentIndex = index;
             });
           },
-          selectedItemColor: Theme.of(context).primaryColor,
+          selectedItemColor: Theme
+              .of(context)
+              .primaryColor,
           showUnselectedLabels: false,
           showSelectedLabels: false,
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Menu"),
-            BottomNavigationBarItem(icon: Icon(Icons.add_shopping_cart), label: "Cart"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Wish List"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add_shopping_cart), label: "Cart"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: "Wish List"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
           ]),
     );
