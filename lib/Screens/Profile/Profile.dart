@@ -15,53 +15,63 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String loggedToken = '';
-  var currentToken = '';
-  double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
+  late String loggedToken;
+  var currentToken;
+  final double _headerHeight = 250;
+  final Key _formKey = GlobalKey<FormState>();
 
-  // @override
-  // void initState() {
-
-  //   super.initState();
-  //   authStatus().whenComplete(() async {
-  //     if(loggedToken != null){
-  //       currentToken = loggedToken;
-  //     }
-  //   });
-  // }
-
+  @override
   void initState() {
     super.initState();
-    authStatus().whenComplete(() async {
-      if (loggedToken != null) {
-        // print("$loggedToken this logged");
-      } else {
-        setState(() {});
-      }
-    });
+    authStatus();
   }
 
   Future authStatus() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    String? myToken = sharedPreferences.getString("TOKEN");
-    setState(() {
-      loggedToken = myToken!;
-    });
+    String? tokens = sharedPreferences.getString("TOKEN");
+    return tokens;
   }
 
   @override
   Widget build(BuildContext context) {
-    return loggedToken.isNotEmpty
-        ? ProfilePage(
-            callback: () => setState(() {Navigator.pop(context);}),
-          )
-        : LoginPage(callback: () {
-            setState(() {
-              Navigator.pop(context);
-            });
-          });
+    return FutureBuilder(
+        future: authStatus(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return LoginPage();
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            );
+          }
+          if (snapshot.hasData) {
+            // print("This is the data found ${snapshot.data}");
+            return const ProfilePage();
+          } else if(!snapshot.hasData){
+            print("This is the error ${snapshot.error}");
+            return LoginPage();
+          }else{
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            );
+          }
+        });
+
+    // return loggedToken.isNotEmpty
+    //     ? ProfilePage(
+    //         callback: () => setState(() {
+    //           Navigator.pop(context);
+    //         }),
+    //       )
+    //     : LoginPage(callback: () {
+    //         setState(() {
+    //           Navigator.pop(context);
+    //         });
+    //       });
     if (loggedToken.isNotEmpty) {
     } else {
       return LoginPage(

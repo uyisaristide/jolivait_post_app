@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:shopping/NavScreens.dart';
+import 'package:shopping/Screens/Profile/Profile.dart';
 import 'package:shopping/db/UserModel.dart';
 
 import 'authentication/profile_page.dart';
@@ -11,7 +12,9 @@ void main() {
 }
 
 class ShoppingApp extends StatefulWidget {
-  const ShoppingApp({Key? key}) : super(key: key);
+  final VoidCallback? callback;
+
+  const ShoppingApp({Key? key, this.callback}) : super(key: key);
 
   @override
   State<ShoppingApp> createState() => _ShoppingAppState();
@@ -26,7 +29,6 @@ class _ShoppingAppState extends State<ShoppingApp> {
   //   }
   // }
 
-  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,9 @@ class _ShoppingAppState extends State<ShoppingApp> {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/profile': (context) => ProfilePage(),
+        '/profile': (context) => ProfileScreen(callback: () {
+             return widget.callback!.call();
+            }),
         '/home': (context) => NavigationScreens(),
       },
       debugShowCheckedModeBanner: false,
