@@ -43,7 +43,7 @@ class AddToCart extends StatelessWidget {
                       primary: Theme.of(context).primaryColor),
                   onPressed: () => DatabaseHelper.instance.addToCart(
                         CartModel(
-                            id: null,
+                            id:null,
                             name: products.names,
                             quantity: 1,
                             productId: products.id,
@@ -51,17 +51,22 @@ class AddToCart extends StatelessWidget {
                       ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Add to cart",
                         style: TextStyle(
                           fontSize: 17.0,
                         ),
                       ),
-                      SizedBox(
-                        width: 10.0,
+                      IconButton(
+                        onPressed: () {
+                          print("Rwanda Riza");
+                          return;
+                        },
+                        icon: const Icon(
+                          Icons.shopping_cart_outlined,
+                        ),
                       ),
-                      Icon(Icons.shopping_cart_outlined),
                     ],
                   )),
             ),

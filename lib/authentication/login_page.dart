@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping/Screens/Profile/Profile.dart';
 import 'package:shopping/db/UserModel.dart';
 import './common/theme_helper.dart';
-
 import 'forgot_password_page.dart';
 import 'profile_page.dart';
 import 'registration_page.dart';
@@ -27,8 +22,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  double _headerHeight = 130;
-  Key _formKey = GlobalKey<FormState>();
+  final double _headerHeight = 130;
+  final Key _formKey = GlobalKey<FormState>();
   final _emailContoller = TextEditingController();
   final _passwordContoller = TextEditingController();
 
@@ -158,10 +153,12 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(10, 20, 10, 20),
                                   //child: Text('Don\'t have an account? Create'),
                                   child: Text.rich(TextSpan(children: [
-                                    TextSpan(text: "Don\'t have an account? "),
+                                    const TextSpan(
+                                        text: "Don\'t have an account? "),
                                     TextSpan(
                                       text: 'Create',
                                       recognizer: TapGestureRecognizer()
@@ -197,19 +194,18 @@ class _LoginPageState extends State<LoginPage> {
       UserModel? user = await _loginService.login(
           _emailContoller.text, _passwordContoller.text);
 
-
-        if (user != null) {
-          setState(() {
+      if (user != null) {
+        setState(() {
           print("The user found here! ${user.email}");
           widget.callback!.call();
-          });
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('required'),
-            ),
-          );
-        }
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Incorrect credentials'),
+          ),
+        );
+      }
 
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => ProfileScreen()));
