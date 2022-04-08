@@ -6,7 +6,7 @@ import 'package:shopping/db/DatabaseHelper.dart';
 class AddToCart extends StatelessWidget {
   final Products products;
 
-  AddToCart(this.products);
+  const AddToCart(this.products);
 
   @override
   Widget build(BuildContext context) {
@@ -41,32 +41,46 @@ class AddToCart extends StatelessWidget {
                       ),
                       elevation: 0.0,
                       primary: Theme.of(context).primaryColor),
-                  onPressed: () => DatabaseHelper.instance.addToCart(
-                        CartModel(
-                            id:null,
-                            name: products.names,
-                            quantity: 1,
-                            productId: products.id,
-                            userId: 100),
-                      ),
+                  onPressed: () async {
+                    final tokenStrings = await DatabaseHelper.instance.authStatus();
+                    if (tokenStrings != null) {
+                      final findInCarts =
+                          await DatabaseHelper.instance.findInCart(products.id);
+                      if (findInCarts == false) {
+                        // print("Going to save");
+                        // print("$tokenStrings Found in cart");
+                        DatabaseHelper.instance.addToCart(
+                          CartModel(
+                              id: null,
+                              name: products.names,
+                              quantity: 1,
+                              productId: products.id,
+                              userId: 100),
+                        );
+                      } else {
+                        print("Already in cart please!");
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Login first'),
+                        ),
+                      );
+                    }
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "Add to cart",
                         style: TextStyle(
                           fontSize: 17.0,
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          print("Rwanda Riza");
-                          return;
-                        },
-                        icon: const Icon(
-                          Icons.shopping_cart_outlined,
-                        ),
+                      SizedBox(
+                        width: 10,
                       ),
+                      Icon(Icons.shopping_cart_outlined)
                     ],
                   )),
             ),

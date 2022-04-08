@@ -52,7 +52,7 @@ class _MyCartState extends State<MyCart> {
                         const Text("Some description",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, height: 1.5)),
-                        Text("Rwf 1500}",
+                        Text("Rwf 1500",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,

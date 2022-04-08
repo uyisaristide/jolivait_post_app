@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:shopping/Screens/Home/Widgets/Search.dart';
 import 'package:shopping/Screens/Menu/Widgets/ItemCard.dart';
 import 'package:http/http.dart' as http;
+import 'package:shopping/db/DatabaseHelper.dart';
 import '../../../Models/Products.dart';
 
 class MenuItems extends StatefulWidget {
+  const MenuItems({Key? key}) : super(key: key);
+
   @override
   State<MenuItems> createState() => _MenuItemsState();
 }
@@ -33,7 +36,7 @@ class _MenuItemsState extends State<MenuItems> {
           productsList = mapping;
         });
       } else if (responses.statusCode == 401) {
-        const Text("Unauthenticated");
+        const Text("Products unavailable");
       }
     } on TimeoutException catch (_) {
       setState(() {
@@ -93,9 +96,7 @@ class _MenuItemsState extends State<MenuItems> {
                     child: ListView.separated(
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) => productsList.isEmpty
-                            ? const Center(
-                                child: Text("There is no products"),
-                              )
+                            ? const Center(child: Text('It is empty'))
                             : ItemMenu(productsList.reversed.toList()[index]),
                         separatorBuilder: (_, index) => const SizedBox(
                               height: 5,

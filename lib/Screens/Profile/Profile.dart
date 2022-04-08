@@ -7,7 +7,6 @@ import '../../authentication/profile_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   final VoidCallback? callback;
-
   const ProfileScreen({Key? key, this.callback}) : super(key: key);
 
   @override

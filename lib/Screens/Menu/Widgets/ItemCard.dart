@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping/Models/Products.dart';
 import 'package:shopping/Screens/WishList/WishListModel.dart';
 import 'package:shopping/db/DatabaseHelper.dart';
@@ -7,8 +8,14 @@ import '../../Details/Details.dart';
 
 class ItemMenu extends StatelessWidget {
   final Products products;
-
   ItemMenu(this.products);
+
+  Future authStatus() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String? tokens = sharedPreferences.getString("TOKEN");
+    return tokens;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,25 +73,35 @@ class ItemMenu extends StatelessWidget {
                       color: Colors.white.withOpacity(0.9),
                       shape: BoxShape.circle),
                   child: IconButton(
+                    icon: Icon(Icons.favorite_border_outlined),
                     iconSize: 15,
-                    icon: const Icon(Icons.favorite_border_outlined),
                     onPressed: () async {
-                      final avStates =
-                          await DatabaseHelper.instance.findSingle(products.id);
-                      if (avStates == false) {
-                        DatabaseHelper.instance.addWishlist(WishListModel(
-                            id: null,
-                            name: products.names,
-                            price: products.price.toInt(),
-                            productId: products.id,
-                            quantity: products.quantity,
-                            userId: 100,
-                            description: products.descriptions,
-                            details: products.details.toString(),
-                            thumbnail: products.thumbnail));
-                      }else{
-                        print("Can not duplicate data");
+                      final tokeString = await DatabaseHelper.instance.authStatus();
+                      if (tokeString != null) {
+                        final avStates = await DatabaseHelper.instance
+                            .findSingle(products.id);
+                        if (avStates == false) {
+                          DatabaseHelper.instance.addWishlist(WishListModel(
+                              id: null,
+                              name: products.names,
+                              price: products.price.toInt(),
+                              productId: products.id,
+                              quantity: products.quantity,
+                              userId: 100,
+                              description: products.descriptions,
+                              details: products.details.toString(),
+                              thumbnail: products.thumbnail));
+                        } else {
+                          print("Can not duplicate data");
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Login first'),
+                          ),
+                        );
                       }
+
                       // DatabaseHelper.instance.addWishlist(
                       //     WishListModel(
                       //         id: null,

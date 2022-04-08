@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping/Models/Products.dart';
 import 'package:shopping/Screens/WishList/WishListModel.dart';
 import 'package:sqflite/sqflite.dart';
@@ -88,17 +89,6 @@ class DatabaseHelper {
     return await db.insert('userCart', cartModel.toMap());
   }
 
-  void findInCart(int id) async {
-    Database db = await instance.database;
-    var availability =
-        await db.query('userCart', where: 'id = ?', whereArgs: [id]);
-    if (availability.isEmpty) {
-      alreadInCart;
-    } else {
-      alreadInCart = true;
-    }
-  }
-
   Future<List<Products>> getWishList() async {
     Database db = await instance.database;
     var wishProducts = await db.query('wishList', orderBy: 'id');
@@ -139,5 +129,23 @@ class DatabaseHelper {
       // print("Single user found $findWishlist");
       return true;
     }
+  }
+
+  Future<bool> findInCart(int id) async {
+    Database db = await instance.database;
+    var availability =
+        await db.query('userCart', where: 'productId = ?', whereArgs: [id]);
+    if (availability.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future authStatus() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    String? tokens = sharedPreferences.getString("TOKEN");
+    return tokens;
   }
 }

@@ -13,9 +13,7 @@ import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   final VoidCallback? callback;
-
   const LoginPage({Key? key, this.callback}) : super(key: key);
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -25,11 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   final Key _formKey = GlobalKey<FormState>();
   final _emailContoller = TextEditingController();
   final _passwordContoller = TextEditingController();
-
   bool hidePassword = true;
-
   final ILogin _loginService = LoginService();
-
   // late LoginRequestModel requestModel;
 
   // void initState() {
