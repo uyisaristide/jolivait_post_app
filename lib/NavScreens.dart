@@ -22,8 +22,7 @@ class _NavigationScreensState extends State<NavigationScreens> {
   void initState() {
     super.initState();
     authStatus().whenComplete(() async {
-      if (finalToken != null) {
-      } else {
+      if (finalToken != null) {} else {
         setState(() {});
       }
     });
@@ -63,9 +62,10 @@ class _NavigationScreensState extends State<NavigationScreens> {
         const MenuScreen(),
         Cart(),
         WishList(),
-        ProfileScreen(callback: () => setState(() {
-          currentIndex = 4;
-        }),)
+        ProfileScreen(callback: () =>
+            setState(() {
+              currentIndex = 4;
+            }),)
       ];
 
   @override

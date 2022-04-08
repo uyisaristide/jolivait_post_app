@@ -44,11 +44,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: [
             Container(
               height: 200,
-              child: HeaderWidget(100, false, Icons.person_add_alt_1_rounded),
+              child: const HeaderWidget(100, false, Icons.person_add_alt_1_rounded),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(25, 50, 25, 10),
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              margin: const EdgeInsets.fromLTRB(25, 50, 25, 10),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               alignment: Alignment.center,
               child: Column(
                 children: [
@@ -60,17 +60,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           child: Stack(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
                                   border:
                                       Border.all(width: 5, color: Colors.white),
                                   color: Colors.white,
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black12,
                                       blurRadius: 20,
-                                      offset: const Offset(5, 5),
+                                      offset: Offset(5, 5),
                                     ),
                                   ],
                                 ),
@@ -81,7 +81,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.fromLTRB(80, 80, 0, 0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(80, 80, 0, 0),
                                 child: Icon(
                                   Icons.add_circle,
                                   color: Colors.grey.shade700,
@@ -102,7 +103,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         //   decoration:
                         //       ThemeHelper().inputBoxDecorationShaddow(),
                         // ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         Container(
@@ -113,7 +114,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: emailController,
@@ -148,7 +149,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         //   decoration:
                         //       ThemeHelper().inputBoxDecorationShaddow(),
                         // ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: passwordController,
@@ -172,7 +173,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
                             controller: cpasswordController,
@@ -181,7 +182,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 "Confirm",
                                 "Confirm your password",
                                 IconButton(
-                                    icon: Icon(Icons.visibility),
+                                    icon: const Icon(Icons.visibility),
                                     onPressed: () {
                                       setState(() {
                                         hidecPassword = !hidecPassword;
@@ -196,7 +197,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         FormField<bool>(
                           builder: (state) {
                             return Column(
@@ -212,7 +213,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                             state.didChange(value);
                                           });
                                         }),
-                                    Text(
+                                    const Text(
                                       "I accept all terms and conditions.",
                                       style: TextStyle(
                                           color: Colors.grey, fontSize: 12),
@@ -252,7 +253,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   const EdgeInsets.fromLTRB(40, 10, 40, 10),
                               child: Text(
                                 "Register".toUpperCase(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -270,24 +271,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 //   _user = user;
                                 // });
 
-                              } if (passwordController!=cpasswordController) {
+                              }
+                              if (passwordController != cpasswordController) {
                                 print('mismatch');
                                 Flushbar(
                                   title: 'password mismactch',
                                   message:
                                       'Please be careful cause the password you are entering is not the same as the one you are confirming',
-                                  duration: Duration(seconds: 6),
-                                )..show(context);
+                                  duration: const Duration(seconds: 6),
+                                ).show(context);
                               }
                             },
                           ),
                         ),
-                        SizedBox(height: 30.0),
-                        Text(
+                        const SizedBox(height: 30.0),
+                        const Text(
                           "Or create account using social media",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        SizedBox(height: 25.0),
+                        const SizedBox(height: 25.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -304,14 +306,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     builder: (BuildContext context) {
                                       return ThemeHelper().alartDialog(
                                           "Google ",
-                                          "sign in using Google accoutnt.",
+                                          "sign in using Google Account.",
                                           context);
                                     },
                                   );
                                 });
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 30.0,
                             ),
                             GestureDetector(
@@ -343,7 +345,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 });
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 30.0,
                             ),
                             GestureDetector(
@@ -392,17 +394,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
     print(response.statusCode);
 
     if (response.statusCode == 201) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const ProfilePage()));
     } else if (response.statusCode == 422) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('this email is already taken'),
         ),
       );
     } else if (response.statusCode == 500) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('not reaching to the server'),
         ),
       );

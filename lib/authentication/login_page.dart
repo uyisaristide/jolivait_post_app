@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping/Screens/Profile/Profile.dart';
 import 'package:shopping/authentication/services/loginDialogue.dart';
 import 'package:shopping/db/UserModel.dart';
 import './common/theme_helper.dart';
-
 import 'forgot_password_page.dart';
 import 'profile_page.dart';
 import 'registration_page.dart';
@@ -28,8 +23,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  double _headerHeight = 130;
-  Key _formKey = GlobalKey<FormState>();
+  final double _headerHeight = 130;
+  final Key _formKey = GlobalKey<FormState>();
   final _emailContoller = TextEditingController();
   final _passwordContoller = TextEditingController();
 
@@ -111,27 +106,27 @@ class _LoginPageState extends State<LoginPage> {
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
                                 const SizedBox(height: 15.0),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                                  alignment: Alignment.topRight,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ForgotPasswordPage()),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "Forgot your password?",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                // Container(
+                                //   margin:
+                                //       const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                //   alignment: Alignment.topRight,
+                                //   child: GestureDetector(
+                                //     onTap: () {
+                                //       Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //             builder: (context) =>
+                                //                 const ForgotPasswordPage()),
+                                //       );
+                                //     },
+                                //     child: const Text(
+                                //       "Forgot your password?",
+                                //       style: TextStyle(
+                                //         color: Colors.grey,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 Container(
                                   decoration: ThemeHelper()
                                       .buttonBoxDecoration(context),
@@ -156,9 +151,12 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                  //child: Text('Don\'t have an account? Create'),
                                   child: Text.rich(TextSpan(children: [
-                                    TextSpan(text: "Don\'t have an account? "),
+                                    const TextSpan(
+                                        text: "Don\'t have an account? "),
                                     TextSpan(
                                       text: 'Create',
                                       recognizer: TapGestureRecognizer()
@@ -202,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('required'),
+            content: Text('Incorrect credentials'),
           ),
         );
       }
@@ -234,4 +232,6 @@ class _LoginPageState extends State<LoginPage> {
       // }
     }
   }
+
+
 }

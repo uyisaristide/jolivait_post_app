@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping/db/DatabaseHelper.dart';
 import '../../Models/Products.dart';
+import 'ModelCart.dart';
 import 'MyCart.dart';
 
 class Cart extends StatefulWidget {
@@ -10,7 +12,6 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   var productsList = Products.generateItems();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -22,7 +23,7 @@ class _CartState extends State<Cart> {
               padding: EdgeInsets.only(top: 20, bottom: 15),
               child: Center(
                 child: Text(
-                  "Wish list",
+                  "Cart",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
@@ -30,33 +31,43 @@ class _CartState extends State<Cart> {
             Container(
               height: 430,
               child: SizedBox(
-                  child: FutureBuilder<List<Products>>(
-                      future: DatabaseHelper.instance.getWishList(),
+                  child: FutureBuilder<List<CartModel>>(
+                      future: DatabaseHelper.instance.cartList(),
                       builder: (BuildContext context,
-                          AsyncSnapshot<List<Products>> snapshot) {
+                          AsyncSnapshot<List<CartModel>> snapshot) {
                         if (snapshot.hasData) {
                           try {
-                            final wishObj = snapshot.data;
+                            final wishObj = snapshot.data as List<CartModel>;
                             // print("This is the data ${snapshot.data}");
+                            // print("This is number of something in cart ${wishObj.length}");
                             return snapshot.data!.isNotEmpty
-                                ? ListView.separated(
-                                    scrollDirection: Axis.vertical,
-                                    itemBuilder: (context, index) =>
-                                        MyCart(wishObj![index]),
-                                    separatorBuilder: (_, index) =>
+                                ? StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return
+                                      ListView.separated(
+                                        scrollDirection: Axis.vertical,
+                                        itemBuilder: (context, index) =>
+                                            MyCart(wishObj[index],deleteRefresh:(){
+                                              setState((){
+                                                wishObj.removeWhere((e) => e.id == wishObj[index].id);
+                                              });
+                                            }),
+                                        separatorBuilder: (_, index) =>
                                         const SizedBox(
                                           height: 5,
                                         ),
-                                    itemCount: productsList.length)
-                                : Center(child: Text("Data is null"));
+                                        itemCount: wishObj.length);
+                                  }
+                                  )
+                                : const Center(child: Text("Data is null"));
                           } catch (e) {
-                            print("This error occured $e");
+                            print("This error occurred $e");
                             throw e;
                           }
                         } else if (snapshot.hasError) {
-                          return Icon(Icons.error_outline);
+                          return const Icon(Icons.error_outline);
                         } else {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         }
                       })
                   // ListView.separated(

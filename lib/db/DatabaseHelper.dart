@@ -26,7 +26,7 @@ class DatabaseHelper {
         version: 6, onCreate: _onCreate, onUpgrade: _onUpgrade);
   }
 
-//version 1, created two tables, 2, added column, 3 truncated trable, version 4 no truncate, version 5 userId
+//version 1, created two tables, 2, added column, 3 truncated table, version 4 no truncate, version 5 userId
   Future _onCreate(Database db, int version) async {
     try {
       await db.execute('''
@@ -61,9 +61,10 @@ class DatabaseHelper {
   }
 
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    await db.execute('''
-      ALTER TABLE wishList ADD COLUMN productId INTEGER
-    ''');
+    // await db.execute('''
+    //   ALTER TABLE wishList ADD COLUMN productId INTEGER
+    // ''');
+
     await db.execute('''
       ALTER TABLE wishList ADD COLUMN userId INTEGER
     ''');
@@ -83,7 +84,7 @@ class DatabaseHelper {
 
   Future<int> addToCart(CartModel cartModel) async {
     Database db = await instance.database;
-    print("going to save");
+    // print("going to save");
     return await db.insert('userCart', cartModel.toMap());
   }
 
@@ -107,13 +108,18 @@ class DatabaseHelper {
     return fetchWish;
   }
 
+  // Future<List<CartModel>> getCart() async{
+  //   Database db = await instance.database;
+  //   var List<CartModel> listCart = await db.query('')
+  // }
+
   Future<int> addWishlist(WishListModel wishListModel) async {
     Database db = await instance.database;
     return await db.insert('wishList', wishListModel.toWishListModel());
   }
 
   Future<int> deleteCart(int id) async {
-    Database db = await instance.database;
+    Database db = await DatabaseHelper.instance.database;
     return await db.delete('userCart', where: 'id = ?', whereArgs: [id]);
   }
 
