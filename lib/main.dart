@@ -1,12 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+
 import 'package:shopping/NavScreens.dart';
 import 'package:shopping/db/UserModel.dart';
 
-import 'Screens/Home/Home.dart';
 import 'authentication/profile_page.dart';
 
 void main() {

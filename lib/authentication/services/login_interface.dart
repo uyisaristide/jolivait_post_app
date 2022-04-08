@@ -5,7 +5,7 @@ import '../../db/UserModel.dart';
 
 abstract class ILogin {
   Future<UserModel?> login(String email, String password) async {
-    final api = 'https://product-mgt-api.herokuapp.com/api/login';
+    const api = 'https://product-mgt-api.herokuapp.com/api/login';
     final data = {"email": email, "password": password};
     final dio = Dio();
     Response response;

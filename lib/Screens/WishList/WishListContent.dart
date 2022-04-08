@@ -5,7 +5,8 @@ import '../Details/Details.dart';
 
 class WishContent extends StatefulWidget {
   final Products products;
-  WishContent(this.products);
+  final VoidCallback? deleteCallback;
+  const WishContent(this.products,{Key? key, this.deleteCallback}):super(key: key);
 
   @override
   State<WishContent> createState() => _WishContentState();
@@ -71,8 +72,10 @@ class _WishContentState extends State<WishContent> {
                     onPressed: () async{
                       setState(() {});
                       final deletes = await DatabaseHelper.instance.deleteWishList(widget.products.id);
-                      if(deletes > 1){
-                        setState(() { });
+                      if(deletes == 1){
+                        setState(() {
+                          widget.deleteCallback?.call();
+                        });
                       }
                     },
                     iconSize: 20,

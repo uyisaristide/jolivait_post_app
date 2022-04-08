@@ -27,42 +27,57 @@ class _WishListState extends State<WishList> {
                 ),
               ),
             ),
+            Center(
+              child: OutlinedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.payment),
+                  label: const Text('Proceed to pay')),
+            ),
             Container(
-              height: 430,
+              height:MediaQuery.of(context).size.height,
               child: SizedBox(
-                  child: FutureBuilder<List<Products>>(
-                      future: DatabaseHelper.instance.getWishList(),
-                      builder: (BuildContext context, AsyncSnapshot<List<Products>> snapshot) {
+                    child: FutureBuilder<List<Products>>(
+                          future: DatabaseHelper.instance.getWishList(),
+                          builder: (BuildContext context, AsyncSnapshot<List<Products>> snapshot) {
 
-                        if(!snapshot.hasData){
-                          return Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),);
-                        }
-                        final allData = snapshot.data as List<Products>;
-                        print("Saved products are: ${allData.length}");
+                            if(!snapshot.hasData){
+                              return Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),);
+                            }
+                            final allData = snapshot.data as List<Products>;
+                            // print("Saved products are: ${allData.length}");
 
-                        if (snapshot.hasData) {
-                          return snapshot.data!.isEmpty
-                              ? const Center(child: Text("Wish list Empty"),)
-                              :ListView.separated(
-                              itemBuilder: (context, index) =>
-                                  WishContent(allData[index]),
-                              separatorBuilder: (_, index) =>
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              itemCount: allData.length);
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const Icon(Icons.error_outline);
-                        } else {
-                          return CircularProgressIndicator();
-                        }
-                      })
+                            if (snapshot.hasData) {
+                              return snapshot.data!.isEmpty
+                                  ? const Center(child: Text("Wish list Empty"),)
+                                  :StatefulBuilder(
+                                  builder: (context,setState) {
+                                    return ListView.separated(
+                                        itemBuilder: (context, index) =>
+                                            WishContent(allData[index],deleteCallback: (){
+                                              setState((){
+                                                allData.removeWhere((e) => e.id == allData[index].id);
+                                              });
+                                            },),
+                                        separatorBuilder: (_, index) =>
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        itemCount: allData.length);
+                                  }
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return const Icon(Icons.error_outline);
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          })
+
                   // ListView.separated(
                   //     scrollDirection: Axis.vertical,
                   //     itemBuilder: (context, index) =>
@@ -73,12 +88,7 @@ class _WishListState extends State<WishList> {
                   //     itemCount: productsList.length),
                   ),
             ),
-            Center(
-              child: OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.payment),
-                  label: const Text('Proceed to pay')),
-            ),
+            //
             // Card(
             //   margin: const EdgeInsets.symmetric(horizontal: 25),
             //   shape:

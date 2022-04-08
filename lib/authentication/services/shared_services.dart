@@ -10,7 +10,7 @@ class LoginService extends ILogin {
   Future<UserModel?> login(String email, String password) async {
     final api = Uri.parse('https://product-mgt-api.herokuapp.com/api/login');
     final data = {"email": email, "password": password};
-
+    
     http.Response response;
     response = await http.post(api, body: data);
     
@@ -20,14 +20,15 @@ class LoginService extends ILogin {
       await storage.setString('TOKEN', body['token']);
       await storage.setString('EMAIL', email);
       return UserModel(email: email, token: body['token']);
-    } else {
+    } else if(response.statusCode !=201) {
 
       final errorResponse = jsonDecode(response.body);
     final errorMessage = errorResponse['message'];
 
       print(errorMessage);
     }
-  }
+    
+  } 
 
   @override
   Future<UserModel?> getUser() async {

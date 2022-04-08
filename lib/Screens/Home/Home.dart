@@ -6,7 +6,8 @@ import 'package:shopping/Screens/Home/Widgets/Search.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final VoidCallback? callback;
+  const HomePage({Key? key, this.callback}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [CustomAppBar(), SearchBar(), NewArrivals(), BestSell()],
+        children: [CustomAppBar(callback: widget.callback,), SearchBar(), NewArrivals(), BestSell()],
       ),
     );
     // bottomNavigationBar: BottomNavigationBar(

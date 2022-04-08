@@ -64,7 +64,7 @@ class Products {
           thumbnail: "assets/images/arrival1.png"),
       Products(
           id: 1100,
-          names: 'T chirt, Polo',
+          names: 'Polo',
           price: 12300,
           descriptions: "Hardcoded strings",
           quantity: 53,

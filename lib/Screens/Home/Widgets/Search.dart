@@ -22,13 +22,16 @@ class _SearchBarState extends State<SearchBar> {
           Flexible(
             flex: 1,
             child: TextField(
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
-                  final results = productsList.where((element) => element.names.toLowerCase().contains(value)).toList();
-                  // print("${results} printed as results");
+                  final results = productsList
+                      .where((element) =>
+                          element.names.toLowerCase().contains(value))
+                      .toList();
+                  print(results.first.names);
                 });
               },
-              controller: _searchQuery,
+              // controller: _searchQuery,
               cursorColor: Colors.grey,
               decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -67,20 +70,7 @@ class _SearchBarState extends State<SearchBar> {
         //       );
         //     })),
 
-
-
-
-
-
         //Suggestions
-
-
-
-
-
-
-
-
 
         // Row(
         //   children: suggestionsList

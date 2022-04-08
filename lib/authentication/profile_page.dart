@@ -1,12 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping/authentication/productsDisplay.dart';
-import 'package:shopping/authentication/widgets/productsList.dart';
-import 'package:shopping/db/UserModel.dart';
-import 'package:shopping/main.dart';
 import './login_page.dart';
 import './splash_screen.dart';
 import './widgets/header_widget.dart';
@@ -17,6 +12,9 @@ import 'registration_page.dart';
 import 'services/shared_services.dart';
 
 class ProfilePage extends StatefulWidget {
+  final VoidCallback? callback;
+
+  const ProfilePage({Key? key, this.callback}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ProfilePageState();
@@ -35,12 +33,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "USERS PROFILE PAGE",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: null,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -59,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             child: Stack(
               children: <Widget>[
-                Icon(Icons.notifications),
+                const Icon(Icons.notifications),
                 Positioned(
                   right: 0,
                   child: Container(
@@ -68,11 +66,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       minWidth: 12,
                       minHeight: 12,
                     ),
-                    child: Text(
+                    child: const Text(
                       '1',
                       style: TextStyle(
                         color: Colors.white,
@@ -93,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [
+                  stops: const [
                 0.0,
                 1.0
               ],
@@ -118,8 +116,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
-                  child: Text(
-                    "Shoping App",
+                  child: const Text(
+                    "FlutterTutorial.Net",
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.white,

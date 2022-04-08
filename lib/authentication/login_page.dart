@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping/Screens/Profile/Profile.dart';
+import 'package:shopping/authentication/services/loginDialogue.dart';
 import 'package:shopping/db/UserModel.dart';
 import './common/theme_helper.dart';
 
@@ -17,7 +19,9 @@ import 'widgets/header_widget.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final VoidCallback? callback;
+
+  const LoginPage({Key? key, this.callback}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -42,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // context = this.context;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -65,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                         //   style: TextStyle(
                         //       fontSize: 60, fontWeight: FontWeight.bold),
                         // ),
-                        Text(
+                        const Text(
                           'Signin into your account',
                           style: TextStyle(color: Colors.grey),
                         ),
@@ -84,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 30.0),
+                                const SizedBox(height: 30.0),
                                 Container(
                                   child: TextFormField(
                                     controller: _passwordContoller,
@@ -105,9 +110,10 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration:
                                       ThemeHelper().inputBoxDecorationShaddow(),
                                 ),
-                                SizedBox(height: 15.0),
+                                const SizedBox(height: 15.0),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(10, 0, 10, 20),
                                   alignment: Alignment.topRight,
                                   child: GestureDetector(
                                     onTap: () {
@@ -115,10 +121,10 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ForgotPasswordPage()),
+                                                const ForgotPasswordPage()),
                                       );
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Forgot your password?",
                                       style: TextStyle(
                                         color: Colors.grey,
@@ -132,11 +138,11 @@ class _LoginPageState extends State<LoginPage> {
                                   child: ElevatedButton(
                                     style: ThemeHelper().buttonStyle(),
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          40, 10, 40, 10),
                                       child: Text(
                                         'Sign In'.toUpperCase(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
@@ -144,7 +150,8 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     onPressed: () async {
                                       print(LoginPage().runtimeType);
-                                      signIn();
+                                      // signIn();
+                                      showLoginDialog(context);
                                     },
                                   ),
                                 ),
@@ -180,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> signIn() async {
+  Future<ProfilePage?> signIn() async {
     // String url = "https://product-mgt-api.herokuapp.com/api/login";
 
     if (_emailContoller.text.isNotEmpty && _passwordContoller.text.isNotEmpty) {
@@ -188,22 +195,43 @@ class _LoginPageState extends State<LoginPage> {
           _emailContoller.text, _passwordContoller.text);
 
       if (user != null) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+        setState(() {
+          print("The user found here! ${user.email}");
+          widget.callback!.call();
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('required'),
+          ),
+        );
       }
-      // else {
+
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+      // final response = await http.post(Uri.parse(url), body: {
+      //   'email': _emailContoller.text,
+      //   'password': _passwordContoller.text,
+      // });
+      // print(response.statusCode);
+
+      // if (response.statusCode == 201) {
+      //   print(response.statusCode);
+      //   final SharedPreferences sharedPreferences =
+      //       await SharedPreferences.getInstance();
+      //   sharedPreferences.setString('token', _emailContoller.text);
+      //   print(response.body);
+
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      // } else {
+      //   print(response.body);
       //   ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
       //     content: Text(response.),
       //   ),
       // );
       // }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('required'),
-        ),
-      );
     }
   }
 }

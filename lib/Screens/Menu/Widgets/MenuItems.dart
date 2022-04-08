@@ -46,7 +46,6 @@ class _MenuItemsState extends State<MenuItems> {
       });
       throw "Message for error: $error Network exception";
     } catch (e) {
-
       const Text("Network error found");
       throw Exception(e);
     }
@@ -87,10 +86,9 @@ class _MenuItemsState extends State<MenuItems> {
                       // Navigator.pushNamed(context, '/');
                     });
                   },
-                )
-          )
+                ))
               : Container(
-                  height: 500,
+                  height: MediaQuery.of(context).size.height,
                   child: SizedBox(
                     child: ListView.separated(
                         scrollDirection: Axis.vertical,
