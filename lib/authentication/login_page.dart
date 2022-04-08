@@ -143,6 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                     onPressed: () async {
+                                      print(LoginPage().runtimeType);
                                       signIn();
                                     },
                                   ),

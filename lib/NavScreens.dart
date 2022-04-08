@@ -4,6 +4,8 @@ import 'package:shopping/Screens/Home/Home.dart';
 import 'package:shopping/Screens/Menu/MenuScreen.dart';
 import 'package:shopping/Screens/Profile/Profile.dart';
 import 'package:shopping/Screens/WishList/WishList.dart';
+import 'package:shopping/authentication/login_page.dart';
+import 'package:shopping/authentication/profile_page.dart';
 
 import 'Screens/Cart/CartScreen.dart';
 
@@ -20,14 +22,26 @@ class _NavigationScreensState extends State<NavigationScreens> {
   void initState() {
     authStatus().whenComplete(() async {
       if (finalToken != null) {
-        setState(() {Navigator.pushNamed(context, '/profile');});
-        
+        setState(() {
+          Navigator.pushNamed(context, '/profile');
+        });
       } else {
         setState(() {});
       }
     });
 
     super.initState();
+  }
+
+  Future profileInterface() {
+    final profile;
+    if (finalToken != null) {
+      profile = LoginPage();
+      return profile;
+    } else {
+      profile = ProfilePage();
+      return profile;
+    }
   }
 
   Future authStatus() async {
@@ -68,8 +82,10 @@ class _NavigationScreensState extends State<NavigationScreens> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Menu"),
-            BottomNavigationBarItem(icon: Icon(Icons.add_shopping_cart), label: "Cart"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Wish List"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add_shopping_cart), label: "Cart"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: "Wish List"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
           ]),
     );

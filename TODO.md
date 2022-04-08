@@ -1,4 +1,4 @@
 - [ ] activating search bar
 - [ ] cart page
 - [ ] managing sessions
-- [ ] activating show and hide password icon
+- * activating show and hide password icon
