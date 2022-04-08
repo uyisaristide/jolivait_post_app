@@ -35,6 +35,11 @@ class _CartState extends State<Cart> {
                       future: DatabaseHelper.instance.cartList(),
                       builder: (BuildContext context,
                           AsyncSnapshot<List<CartModel>> snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
+                          );
+                        }
                         if (snapshot.hasData) {
                           try {
                             final wishObj = snapshot.data as List<CartModel>;

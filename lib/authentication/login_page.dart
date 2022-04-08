@@ -5,7 +5,6 @@ import 'package:shopping/authentication/services/loginDialogue.dart';
 import 'package:shopping/db/UserModel.dart';
 import './common/theme_helper.dart';
 import 'forgot_password_page.dart';
-import 'profile_page.dart';
 import 'registration_page.dart';
 import 'services/login_interface.dart';
 import 'services/shared_services.dart';
@@ -143,10 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                                             color: Colors.white),
                                       ),
                                     ),
-                                    onPressed: () async {
-                                      print(LoginPage().runtimeType);
-                                      // signIn();
-                                      showLoginDialog(context);
+                                    onPressed: () async{
+                                      await signIn();
                                     },
                                   ),
                                 ),
@@ -185,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<ProfilePage?> signIn() async {
+  Future signIn() async {
     // String url = "https://product-mgt-api.herokuapp.com/api/login";
 
     if (_emailContoller.text.isNotEmpty && _passwordContoller.text.isNotEmpty) {
@@ -193,10 +190,8 @@ class _LoginPageState extends State<LoginPage> {
           _emailContoller.text, _passwordContoller.text);
 
       if (user != null) {
-        setState(() {
-          print("The user found here! ${user.email}");
-          widget.callback!.call();
-        });
+        print("The user not found here! $user");
+        Navigator.pushNamed(context, '/');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -204,7 +199,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }
-
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => ProfileScreen()));
       // final response = await http.post(Uri.parse(url), body: {
@@ -231,6 +225,7 @@ class _LoginPageState extends State<LoginPage> {
       // );
       // }
     }
+    return 0;
   }
 
 

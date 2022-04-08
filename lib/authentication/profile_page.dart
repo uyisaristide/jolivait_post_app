@@ -13,7 +13,6 @@ import 'services/shared_services.dart';
 
 class ProfilePage extends StatefulWidget {
   final VoidCallback? callback;
-
   const ProfilePage({Key? key, this.callback}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
