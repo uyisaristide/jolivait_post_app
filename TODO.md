@@ -1,5 +1,5 @@
-- [ ] activating search bar
-- [ ] cart page
-- [ * ] managing sessions
-- [ * ] Error handling
-- [ ] activating show and hide password icon
+- [*] activating search bar
+- [*] cart page
+- [*] managing login page and tokens
+- [*] Error handling
+- [*] activating show and hide password icon
