@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shopping/Screens/Home/Widgets/Search.dart';
 import 'package:shopping/Screens/Menu/Widgets/ItemCard.dart';
 import 'package:http/http.dart' as http;
-import 'package:shopping/db/DatabaseHelper.dart';
 import '../../../Models/Products.dart';
 
 class MenuItems extends StatefulWidget {
@@ -66,7 +64,6 @@ class _MenuItemsState extends State<MenuItems> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SearchBar(),
           const Padding(
             padding: EdgeInsets.only(top: 20, bottom: 15),
             child: Center(

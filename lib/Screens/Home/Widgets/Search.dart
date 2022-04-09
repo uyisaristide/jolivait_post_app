@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../Models/Products.dart';
 
 class SearchBar extends StatefulWidget {
+  final Function(String value)? callback;
+
+  const SearchBar({Key? key, this.callback}) : super(key: key);
   @override
   State<SearchBar> createState() => _SearchBarState();
 }
@@ -22,15 +25,7 @@ class _SearchBarState extends State<SearchBar> {
           Flexible(
             flex: 1,
             child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  final results = productsList
-                      .where((element) =>
-                          element.names.toLowerCase().contains(value))
-                      .toList();
-                  print(results.first.names);
-                });
-              },
+              onChanged: widget.callback,
               // controller: _searchQuery,
               cursorColor: Colors.grey,
               decoration: InputDecoration(

@@ -24,7 +24,7 @@ class DatabaseHelper {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, "CartDatabase.db");
     return await openDatabase(path,
-        version: 6, onCreate: _onCreate, onUpgrade: _onUpgrade);
+        version: 6, onCreate: _onCreate,);
   }
 
 //version 1, created two tables, 2, added column, 3 truncated table, version 4 no truncate, version 5 userId
@@ -32,13 +32,11 @@ class DatabaseHelper {
     try {
       await db.execute('''
             CREATE TABLE userCart(
-            
             id INTEGER PRIMARY KEY, 
             quantity INTEGER, 
             name VARCHAR(255), 
             productId INTEGER,
-            userId INTEGER 
-            
+            userId INTEGER
             )
           ''');
       await db.execute('''
@@ -49,7 +47,9 @@ class DatabaseHelper {
             quantity INTEGER,
             description VARCHAR(255),
             details VARCHAR(255),
-            thumbnail VARCHAR(255)
+            thumbnail VARCHAR(255),
+            productId INTEGER,
+            userId
             )
           ''');
       print("Done, entities created successfully");
@@ -61,15 +61,9 @@ class DatabaseHelper {
     }
   }
 
-  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    // await db.execute('''
-    //   ALTER TABLE wishList ADD COLUMN productId INTEGER
-    // ''');
-
-    await db.execute('''
-      ALTER TABLE wishList ADD COLUMN userId INTEGER
-    ''');
-  }
+  // FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+  //
+  // }
 
   //Retrieving CartList
   Future<List<CartModel>> cartList() async {
@@ -148,4 +142,9 @@ class DatabaseHelper {
     String? tokens = sharedPreferences.getString("TOKEN");
     return tokens;
   }
+
+
+  //Crucial
+
+
 }
