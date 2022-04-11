@@ -51,7 +51,7 @@ class _ShoppingAppState extends State<ShoppingApp> {
         primaryColor: Colors.teal,
         accentColor: Colors.teal,
       ),
-      home: SplashScreen(title: 'welcome to shoping app',),
+      home: NavigationScreens(),
     );
   }
 }
