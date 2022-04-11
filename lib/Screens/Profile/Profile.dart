@@ -14,29 +14,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-<<<<<<< HEAD
-   String loggedToken = '';
-   
-  // var currentToken ;
-  double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
-
-  // @override
-  // void initState() {
-
-  //   super.initState();
-  //   authStatus().whenComplete(() async {
-  //     if(loggedToken != null){
-  //       currentToken = loggedToken;
-  //     }
-  //   });
-  // }
-=======
   late String loggedToken;
   var currentToken;
   final double _headerHeight = 250;
   final Key _formKey = GlobalKey<FormState>();
->>>>>>> 54e5869dbd72d2830993d6312f0e829650335e47
 
   @override
   void initState() {
@@ -47,16 +28,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future authStatus() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-<<<<<<< HEAD
-    String? myToken = sharedPreferences.getString("TOKEN");
-    
-    setState(() {
-      loggedToken = myToken!;
-    });
-=======
     String? tokens = sharedPreferences.getString("TOKEN");
     return tokens;
->>>>>>> 54e5869dbd72d2830993d6312f0e829650335e47
   }
 
   @override

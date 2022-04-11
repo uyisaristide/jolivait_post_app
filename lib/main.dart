@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:shopping/NavScreens.dart';
 import 'package:shopping/Screens/Profile/Profile.dart';
+import 'package:shopping/authentication/splash_screen.dart';
 import 'package:shopping/db/UserModel.dart';
 
 import 'authentication/profile_page.dart';
@@ -50,7 +51,7 @@ class _ShoppingAppState extends State<ShoppingApp> {
         primaryColor: Colors.teal,
         accentColor: Colors.teal,
       ),
-      home: NavigationScreens(),
+      home: SplashScreen(title: 'welcome to shoping app',),
     );
   }
 }
