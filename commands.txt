@@ -1,0 +1,9 @@
+#these are commands you gotta run to activate launcher icon and sreen 
+
+*icon:
+    -flutter pb get 
+    - flutter pub run flutter_launcher_icons:main
+*screen:
+    -flutter clean   
+    -flutter pub get 
+    -flutter pub run flutter_native_splash:create
