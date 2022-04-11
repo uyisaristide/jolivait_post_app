@@ -1,13 +1,9 @@
-
-
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-
 import 'package:shopping/authentication/services/login_interface.dart';
 import 'package:shopping/db/UserModel.dart';
-
 
 class LoginService extends ILogin {
   @override
@@ -17,16 +13,22 @@ class LoginService extends ILogin {
     
     http.Response response;
     response = await http.post(api, body: data);
+    
     if (response.statusCode == 201) {
       SharedPreferences storage = await SharedPreferences.getInstance();
       final body = json.decode(response.body);
       await storage.setString('TOKEN', body['token']);
       await storage.setString('EMAIL', email);
       return UserModel(email: email, token: body['token']);
-    } else {
-      return null;
+    } else if(response.statusCode !=201) {
+
+      final errorResponse = jsonDecode(response.body);
+    final errorMessage = errorResponse['message'];
+
+      print(errorMessage);
     }
-  }
+    
+  } 
 
   @override
   Future<UserModel?> getUser() async {
@@ -49,10 +51,8 @@ class LoginService extends ILogin {
       await storage.remove('TOKEN');
       await storage.remove('EMAIL');
       return true;
-      
     } else {
       return false;
     }
-    
   }
 }

@@ -4,6 +4,8 @@ import 'package:shopping/Screens/Home/Home.dart';
 import 'package:shopping/Screens/Menu/MenuScreen.dart';
 import 'package:shopping/Screens/Profile/Profile.dart';
 import 'package:shopping/Screens/WishList/WishList.dart';
+import 'package:shopping/authentication/login_page.dart';
+import 'package:shopping/authentication/profile_page.dart';
 
 import 'Screens/Cart/CartScreen.dart';
 
@@ -24,6 +26,17 @@ class _NavigationScreensState extends State<NavigationScreens> {
         setState(() {});
       }
     });
+  }
+
+  Future profileInterface() {
+    final profile;
+    if (finalToken != null) {
+      profile = LoginPage();
+      return profile;
+    } else {
+      profile = ProfilePage();
+      return profile;
+    }
   }
 
   Future authStatus() async {

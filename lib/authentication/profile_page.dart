@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping/authentication/productsDisplay.dart';
 import './login_page.dart';
 import './splash_screen.dart';
 import './widgets/header_widget.dart';
@@ -147,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     size: _drawerIconSize,
                     color: Theme.of(context).accentColor),
                 title: Text(
-                  'Login Page',
+                  'Products list',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).accentColor),
@@ -155,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => productsDisplay()),
                   );
                 },
               ),

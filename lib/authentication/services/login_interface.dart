@@ -3,18 +3,19 @@ import 'package:dio/dio.dart';
 
 import '../../db/UserModel.dart';
 
-
 abstract class ILogin {
   Future<UserModel?> login(String email, String password) async {
     const api = 'https://product-mgt-api.herokuapp.com/api/login';
     final data = {"email": email, "password": password};
     final dio = Dio();
     Response response;
-    response = await dio.post(api, data: data);
+    response =
+        await dio.post(api, data: data).timeout(const Duration(seconds: 20));
     if (response.statusCode == 200) {
       final body = response.data;
       return UserModel(email: email, token: body['token']);
     } else {
+      print(response.statusCode);
       return null;
     }
   }
@@ -25,9 +26,8 @@ abstract class ILogin {
     final email = storage.getString('EMAIL');
     if (token != null && email != null) {
       return UserModel(email: email, token: token);
-    } else {
-      return null;
-    }
+    } 
+    
   }
 
   Future<bool> logout() async {
